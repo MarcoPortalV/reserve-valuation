@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reserve valuation: grade equivalents, dilution and recovery | MNGN510 Units 9 and 9a | Marco Portal Valdivia</title>
+<meta name="description" content="Interactive 3D vein block: grade equivalence, in-situ, mineable and recoverable reserve value, minimum mining width and mining dilution, mine recovery, mine life and daily production. MNGN510 Mining Fundamentals, Colorado School of Mines.">
+<meta name="author" content="Marco Portal Valdivia">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#E6ECEE;--panel:rgba(247,250,251,.93);--panel-solid:#F7FAFB;--ink:#17222A;--muted:#51606B;--rule:rgba(23,34,42,.16);
+  --pri:#C8473A;--zz:#1D8A6A;--sec:#2F6DB5;--ore:#C98A1B;--focus:#2F6DB5;
+  --ok:#1D7A55;--bad:#C8473A;--veh:#E89A22;--drift:#DCE5EA;--rock:#B5BFC6;
+  --btn:#FFFFFF;--btn-on:#17222A;--btn-on-ink:#F4F7F8;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1417;--panel:rgba(19,27,32,.92);--panel-solid:#131B20;--ink:#E3E9EC;--muted:#98A6AF;--rule:rgba(227,233,236,.16);
+  --pri:#E06B5E;--zz:#3FB58F;--sec:#7DB0EA;--ok:#4FC48E;--bad:#F0806F;--drift:#22303A;--rock:#3A4852;
+  --btn:#1B252B;--btn-on:#E3E9EC;--btn-on-ink:#0E1417;--focus:#7DB0EA;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0E1417;--panel:rgba(19,27,32,.92);--panel-solid:#131B20;--ink:#E3E9EC;--muted:#98A6AF;--rule:rgba(227,233,236,.16);
+  --pri:#E06B5E;--zz:#3FB58F;--sec:#7DB0EA;--ok:#4FC48E;--bad:#F0806F;--drift:#22303A;--rock:#3A4852;
+  --btn:#1B252B;--btn-on:#E3E9EC;--btn-on-ink:#0E1417;--focus:#7DB0EA;color-scheme:dark;}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.45}
+#stage{position:relative;width:100%;height:100%;overflow:hidden}
+#c{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+#c:active{cursor:grabbing}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;white-space:nowrap;font:500 12px/1.15 "Barlow Semi Condensed","Barlow",system-ui,sans-serif;padding:3px 7px;border-radius:4px;background:var(--panel);border:1px solid var(--rule);color:var(--ink)}
+.lbl.s{border-color:var(--pri)}.lbl.z{border-color:var(--zz)}.lbl.p{border-color:var(--sec)}.lbl.o{border-color:var(--ore)}
+.panel{position:absolute;z-index:10;background:var(--panel);border:1px solid var(--rule);border-radius:10px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#head{top:14px;left:14px;width:360px;padding:14px 16px 12px}
+.brand{margin:-14px -16px 12px;padding:14px 16px;background:#21314D;border-radius:10px 10px 0 0}
+.brand img{display:block;height:34px;width:auto}
+h1{font:600 21px/1.15 "Barlow",system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+.sub{margin:4px 0 0;color:var(--muted);font-size:13px}
+.course{margin:10px 0 0;font:600 13px/1.3 "Barlow Semi Condensed",system-ui,sans-serif}
+.meta{display:grid;grid-template-columns:78px 1fr;gap:3px 10px;margin:10px 0 0;font-size:13px}
+.meta dt{color:var(--muted);font-weight:500}.meta dd{margin:0;font-weight:500}
+.langs{position:absolute;top:74px;right:12px;display:flex;gap:2px}
+.langs button{border:0;background:transparent;color:var(--muted);font:600 12px/1 "Barlow Semi Condensed",sans-serif;padding:4px 5px;cursor:pointer;border-radius:4px}
+.langs button[aria-pressed="true"]{color:var(--ink);background:var(--rule)}
+#ctrl{top:250px;left:14px;width:360px;padding:12px 16px 14px;max-height:calc(100% - 264px);overflow:auto}
+.group{padding:10px 0;border-top:1px solid var(--rule)}
+.group:first-of-type{border-top:0;padding-top:2px}
+.gt{font:600 12px/1 "Barlow Semi Condensed",system-ui,sans-serif;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.chk{display:flex;align-items:center;gap:8px;margin:5px 0;cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--sec)}
+.sw{width:12px;height:12px;border-radius:2px;flex:none;display:inline-block}
+.row{display:flex;gap:6px}
+.btn{flex:1;border:1px solid var(--rule);background:var(--btn);color:var(--ink);border-radius:7px;padding:8px 6px;font:500 14px/1 "Barlow",system-ui,sans-serif;cursor:pointer}
+.btn.primary{background:var(--btn-on);color:var(--btn-on-ink);border-color:transparent}
+.seg{display:flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+.seg button{flex:1;border:0;background:var(--btn);color:var(--ink);font:500 13px/1.1 "Barlow",system-ui,sans-serif;padding:8px 4px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--btn-on);color:var(--btn-on-ink)}
+.sl{margin:6px 0 10px}
+.sl label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.sl output{color:var(--ink);font:600 13px/1.4 "Barlow Semi Condensed",sans-serif;white-space:nowrap}
+input[type=range]{width:100%;accent-color:var(--sec);margin:4px 0 0}
+select{width:100%;font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--rule);background:var(--btn);color:var(--ink)}
+details.more summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--sec);padding:2px 0 6px}
+.help{color:var(--muted);font-size:12px;margin:0}
+.warn{color:var(--bad);font-size:12px;font-weight:600;margin:0 0 6px}
+.sim{font:500 13px/1.5 "Barlow Semi Condensed",sans-serif;margin:8px 0 0}
+.sim b{font-weight:600}
+button:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+#info{top:14px;right:14px;width:540px;padding:0;max-height:calc(100vh - 170px);overflow:auto;resize:horizontal;min-width:400px;max-width:calc(100vw - 360px)}
+#info > summary{list-style:none;cursor:pointer;padding:14px 16px;font:600 17px/1.2 "Barlow",system-ui,sans-serif;position:relative}
+#info > summary::-webkit-details-marker{display:none}
+#info > summary::after{content:"–";float:right;color:var(--muted)}
+#info:not([open]) > summary::after{content:"+"}
+#infobody{padding:0 16px 14px}
+table.c{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+table.c th,table.c td{padding:5px 4px;border-top:1px solid var(--rule);text-align:right;vertical-align:top}
+table.c th:first-child,table.c td:first-child{text-align:left;color:var(--muted);font-weight:500;padding-left:0}
+table.c thead th{border-top:0;font-weight:600}
+table.c tr.sect td{color:var(--ink);font:600 12px/1 "Barlow Semi Condensed",sans-serif;padding-top:12px;border-top:0;letter-spacing:.02em}
+table.c td.n{font:600 13px/1.3 "Barlow Semi Condensed",sans-serif;color:var(--ink);white-space:nowrap}
+table.c td.best{color:var(--ok)}
+.cs{color:var(--pri)}.cz{color:var(--zz)}.cp{color:var(--sec)}
+.note{margin:12px 0 0;padding:9px 11px;border-left:3px solid var(--ore);background:rgba(201,138,27,.1);font-size:13px}
+.box{background:var(--panel-solid);border:1px solid var(--rule);border-radius:8px;margin-top:10px}
+#chartBox{height:260px;padding:6px}#secBox{height:280px;padding:6px}
+#chartBox canvas,#secBox canvas{width:100%;height:100%;display:block}
+.checks{list-style:none;padding:0;margin:8px 0}
+.checks li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--rule);font-size:13px}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+table.fit{width:100%;border-collapse:collapse;font-size:13px}
+table.fit td{padding:4px 0;border-bottom:1px solid var(--rule)}
+table.fit td:last-child{text-align:right}
+dl.kv{margin:10px 0 0;display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:13px}
+dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;font:600 13px/1.4 "Barlow Semi Condensed",sans-serif}
+details.assump{margin-top:14px;border-top:1px solid var(--rule);padding-top:10px}
+details.assump summary{cursor:pointer;font-weight:600}
+details.assump p{margin:8px 0;color:var(--muted);font-size:13px}
+.tabp[hidden]{display:none}
+.grip{display:block;width:44px;height:14px;margin:-6px auto 2px;cursor:move;border-radius:6px;position:relative;touch-action:none}
+.grip::before{content:"";position:absolute;left:8px;right:8px;top:5px;height:4px;border-radius:2px;background:var(--rule)}
+.grip:hover::before{background:var(--muted)}
+.brand .grip::before{background:rgba(255,255,255,.35)}
+.brand .grip:hover::before{background:rgba(255,255,255,.7)}
+#info .grip{position:absolute;top:4px;left:50%;margin:0 0 0 -22px}
+.panel.dragging{opacity:.92;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+#cubeWrap{position:fixed;z-index:12;right:14px;bottom:14px;width:120px;height:120px;border-radius:12px;background:var(--panel);border:1px solid var(--rule)}
+#cube{width:100%;height:100%;display:block;cursor:pointer;touch-action:none}
+#home{position:fixed;z-index:12;right:14px;bottom:142px;width:34px;height:34px;border-radius:8px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+#home:hover{border-color:var(--muted)}
+#cubeHint{position:fixed;z-index:12;right:56px;bottom:150px;font-size:11px;color:var(--muted);text-align:right;pointer-events:none}
+#err{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center}
+@media (min-width:821px){#stage{position:fixed;inset:0}}
+@media (max-width:820px){
+  .grip{display:none}
+  #cubeWrap{position:absolute;width:96px;height:96px;right:10px;bottom:10px}
+  #home{position:absolute;right:10px;bottom:112px}
+  #cubeHint{display:none}
+  body{height:auto}
+  #stage{height:62vh;min-height:360px}
+  .panel{position:relative;inset:auto !important;width:auto !important;max-height:none !important;margin:10px}
+  #wrap{display:flex;flex-direction:column}
+  #head{order:-1}
+}
+
+:root{--prim:#2F6DB5;--secd:#C98A1B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--prim:#7DB0EA;--secd:#E0A84A}}
+:root[data-theme="dark"]{--prim:#7DB0EA;--secd:#E0A84A}
+.lbl.a{border-color:var(--prim)}.lbl.b{border-color:var(--secd)}.lbl.f{border-color:var(--bad);color:var(--bad)}.lbl.d{border-color:#56626B;font-size:11px}.lbl.r{color:var(--muted);font-size:11px}
+.seqtxt{margin:4px 0 10px;font-size:13px;min-height:3.9em}
+.qref{margin:12px 0 0;font:600 13px/1.3 "Barlow Semi Condensed",system-ui,sans-serif;color:var(--muted)}
+.chartbox{height:230px;padding:6px}.chartbox canvas{width:100%;height:100%;display:block}
+#bhBox{height:340px;padding:6px}#bhBox canvas{width:100%;height:100%;display:block}
+table.c tr.tot td{font-weight:600;color:var(--ink)}
+.checks li span:first-child{flex:1}
+.checks li span.n{font-weight:600;color:var(--ink)}
+
+:root{--amber:#B7791F;--trib:#1F9E80}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--amber:#E8B04B;--trib:#3FC4A2}}
+:root[data-theme="dark"]{--amber:#E8B04B;--trib:#3FC4A2}
+.toggles{display:flex;gap:8px;margin:12px 0 0;flex-wrap:wrap}
+.tg{display:flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+.tg button{border:0;background:var(--btn);color:var(--ink);font:600 12px/1 "Barlow Semi Condensed",sans-serif;padding:7px 10px;cursor:pointer}
+.tg button+button{border-left:1px solid var(--rule)}
+.tg button[aria-pressed="true"]{background:var(--btn-on);color:var(--btn-on-ink)}
+.fld{margin:6px 0 10px}
+.fld label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.lbl.t{border-color:var(--trib)}.lbl.d{font-size:11px}
+.warnc{color:var(--amber);font-weight:600}
+.steps{list-style:none;margin:8px 0 0;padding:0}
+.steps li{display:grid;grid-template-columns:18px 1fr auto;gap:2px 8px;padding:7px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.steps .sn{font:600 13px/1.3 "Barlow Semi Condensed",sans-serif;color:var(--muted)}
+.steps .st{font-size:13px;font-weight:600}
+.steps .sr{font:600 14px/1.3 "Barlow Semi Condensed",sans-serif;white-space:nowrap;text-align:right}
+.steps .eq{grid-column:2/4;font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.steps .sr.ok{color:var(--ok)}.steps .sr.bad{color:var(--bad)}.steps .sr.warnc{color:var(--amber)}
+#cmpBox{height:270px;padding:6px}#cmpBox canvas{width:100%;height:100%;display:block}
+input[type=range]:disabled{opacity:.45}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 0;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.lbl.d{border-color:#56626B;font-size:11px}.lbl.r{color:var(--muted);font-size:11px}.lbl.f{border-color:#E0503F}.lbl.b{border-color:#E8A93A}
+#eqBox{height:78px;padding:6px 8px}#eqBox canvas,#recBox canvas{width:100%;height:100%;display:block}
+#recBox{height:210px;padding:6px}
+.ctitle{margin:12px 0 0;font:600 13px/1.3 "Barlow Semi Condensed",system-ui,sans-serif;color:var(--muted)}
+.exrow{display:flex;gap:6px;align-items:center}.exrow select{flex:1}.exrow .btn{flex:none;padding:7px 12px}
+#baseSeg{margin-top:4px}
+.steps li{padding:10px 0;gap:3px 10px}
+.steps .st{font-size:14.5px}.steps .sr{font-size:16px}.steps .sn{font-size:14px}
+.steps .fx{grid-column:2/4;margin-top:5px;padding:6px 10px;border-left:3px solid var(--sec);background:rgba(47,109,181,.08);border-radius:0 6px 6px 0;font:500 14px/1.45 "Barlow",system-ui,sans-serif;color:var(--ink);overflow-wrap:anywhere}
+.steps .fx:empty{display:none}
+.steps .fx sub,.steps .eq sub{font-size:.72em}
+.steps .eq{display:block;margin-top:3px;padding-left:13px;font:500 13.5px/1.55 "Barlow",system-ui,sans-serif;color:var(--muted);font-variant-numeric:tabular-nums}
+.steps .eq span{display:block}.steps .eq .fin{color:var(--ink);font-weight:600}
+#info table.c,#info dl.kv{font-size:13.5px}#info .note{font-size:13.5px}
+.tg button:disabled{opacity:.4;cursor:not-allowed}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div class="panel" id="head">
+    <div class="brand"><span class="grip" data-i18n-title="drag" title="Drag to move" style="margin-top:-10px"></span><img src="data:image/png;base64,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" alt="Colorado School of Mines"></div>
+    <h1 data-i18n="title">Reserve valuation: grade equivalents, dilution and recovery</h1>
+    <p class="sub" data-i18n="sub"></p>
+    <p class="course">MNGN510 - Mining Fundamentals</p>
+    <dl class="meta">
+      <dt data-i18n="mUnit">Lecture units</dt><dd data-i18n="mUnitV"></dd>
+      <dt data-i18n="mStu">Student</dt><dd>Marco Portal Valdivia</dd>
+      <dt data-i18n="mIns">Instructor</dt><dd>Bill Zisch</dd>
+    </dl>
+    <div class="toggles">
+      <div class="tg" role="group" aria-label="Language"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="es" aria-pressed="false">ES</button></div>
+      <div class="tg" role="group" aria-label="Units"><button data-units="us" aria-pressed="true">US</button><button data-units="si" aria-pressed="false">SI</button></div>
+      <div class="tg" role="group" aria-label="Rounding"><button data-rnd="e" aria-pressed="false" data-i18n="rExact">Exact</button><button data-rnd="s" aria-pressed="true" data-i18n="rSlide">As slides</button></div>
+    </div>
+    <p class="help" id="unitHint" style="margin-top:8px"></p>
+    <p class="help" id="rndHint" style="margin-top:4px"></p>
+  </div>
+
+  <div id="stage">
+    <canvas id="c" aria-label="3D model of a dipping vein block with its minimum mining width dilution, mining dilution and unrecovered crown and sill pillars"></canvas>
+    <div id="labels"></div>
+    <div id="cubeHint" data-i18n="cubeHint">Click a face or drag the cube</div>
+    <button id="home" data-i18n-title="home" title="Center model" aria-label="Center model"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></button>
+    <div id="cubeWrap"><canvas id="cube" aria-label="Orientation cube"></canvas></div>
+    <div id="err"><p>WebGL is not available in this browser, so the 3D model can't be shown.</p></div>
+  </div>
+
+  <div class="panel" id="ctrl">
+    <span class="grip" data-i18n-title="drag" title="Drag to move"></span>
+    <div class="group">
+      <p class="gt" data-i18n="view">View</p>
+      <div class="row">
+        <button class="btn" data-view="3d" data-i18n="v3d">3D</button>
+        <button class="btn" data-view="sect" data-i18n="vsect">Section</button>
+        <button class="btn" data-view="close" data-i18n="vclose">Close-up</button>
+        <button class="btn" data-view="long" data-i18n="vlong">Vein face</button>
+      </div>
+    </div>
+    <div class="group">
+      <p class="gt" data-i18n="layers">Layers</p>
+      <label class="chk"><input type="checkbox" id="L_host" checked><i class="sw" style="background:#9AA5AD"></i><span data-i18n="lyHost">lyHost</span></label>
+      <label class="chk"><input type="checkbox" id="L_ore" checked><i class="sw" style="background:#C9923A"></i><span data-i18n="lyOre">lyOre</span></label>
+      <label class="chk"><input type="checkbox" id="L_mmw" checked><i class="sw" style="background:#7DB341"></i><span data-i18n="lyMmw">lyMmw</span></label>
+      <label class="chk"><input type="checkbox" id="L_dil" checked><i class="sw" style="background:#7C83E6"></i><span data-i18n="lyDil">lyDil</span></label>
+      <label class="chk"><input type="checkbox" id="L_rec" checked><i class="sw" style="background:#C9483C"></i><span data-i18n="lyRec">lyRec</span></label>
+      <label class="chk"><input type="checkbox" id="L_surf" checked><i class="sw" style="background:linear-gradient(90deg,#7DB341 50%,transparent 50%)"></i><span data-i18n="lySurf">lySurf</span></label>
+      <label class="chk"><input type="checkbox" id="L_dim" checked><i class="sw" style="background:#56626B"></i><span data-i18n="lyDim">lyDim</span></label>
+      <label class="chk"><input type="checkbox" id="L_lbl" checked><span data-i18n="labels">Labels</span></label>
+    </div>
+    <div class="group">
+      <p class="gt" data-i18n="gEx">Lecture example</p>
+      <div class="exrow"><select id="s_ex" aria-label="Lecture example"><option value="res" data-i18n="ex_res"></option><option value="d1" data-i18n="ex_d1"></option><option value="d2" data-i18n="ex_d2"></option><option value="d3" data-i18n="ex_d3"></option></select>
+      <button class="btn primary" id="bEx" data-i18n="bEx">Load</button></div>
+    </div>
+    <div class="group"><p class="gt" data-i18n="gEq"></p><div id="c_eq"></div></div>
+    <div class="group"><p class="gt" data-i18n="gGeo"></p><div id="c_geo"></div></div>
+    <div class="group"><p class="gt" data-i18n="gOw"></p>
+      <label class="chk"><input type="checkbox" id="lnk"><span data-i18n="lnk"></span></label>
+      <div id="c_ow"></div></div>
+    <div class="group"><p class="gt" data-i18n="gMin"></p><div id="c_min"></div></div>
+    <div class="group"><p class="gt" data-i18n="gRec"></p><div id="c_rec"></div></div>
+    <div class="group"><p class="gt" data-i18n="gProd"></p><div id="c_prod"></div></div>
+    <div class="group"><p class="gt" data-i18n="gDisp"></p><div id="c_disp"></div></div>
+    <div class="group"><p class="help" data-i18n="help"></p></div>
+  </div>
+
+  <details class="panel" id="info" open>
+    <summary><span class="grip" data-i18n-title="drag" title="Drag to move"></span><span data-i18n="infoTitle">Calculations</span></summary>
+    <div id="infobody">
+      <div class="seg" id="tabSeg">
+        <button data-tab="eq" aria-pressed="false" data-i18n="tEq">Grade eq.</button>
+        <button data-tab="ins" aria-pressed="false" data-i18n="tIns">In-situ</button>
+        <button data-tab="min" aria-pressed="true" data-i18n="tMin">Mineable</button>
+        <button data-tab="rec" aria-pressed="false" data-i18n="tRec">Recoverable</button>
+      </div>
+      <div class="tabp" id="tab_eq" hidden>
+        <p class="ctitle" data-i18n="eqBase"></p>
+        <div class="seg" id="baseSeg"><button data-base="au" aria-pressed="true" data-i18n="bAu">Au</button><button data-base="ag" aria-pressed="false" data-i18n="bAg">Ag</button><button data-base="cu" aria-pressed="false" data-i18n="bCu">Cu</button></div>
+        <ol class="steps" id="st_eq"></ol>
+        <p class="ctitle" data-i18n="eqChart"></p>
+        <div class="box" id="eqBox"><canvas id="eqCv"></canvas></div>
+        <table class="c" id="eqT"></table>
+        <dl class="kv" id="eqKV"></dl>
+        <p class="note" id="eqNote"></p>
+      </div>
+      <div class="tabp" id="tab_ins" hidden>
+        <ol class="steps" id="st_ins"></ol>
+        <dl class="kv" id="insKV"></dl>
+        <p class="note" id="insNote"></p>
+      </div>
+      <div class="tabp" id="tab_min">
+        <ul class="checks" id="minChecks"></ul>
+        <ol class="steps" id="st_min"></ol>
+        <table class="c" id="minT"></table>
+        <dl class="kv" id="minKV"></dl>
+        <p class="note" id="minNote"></p>
+      </div>
+      <div class="tabp" id="tab_rec" hidden>
+        <ol class="steps" id="st_rec"></ol>
+        <p class="ctitle" data-i18n="chTitle"></p>
+        <div class="box" id="recBox"><canvas id="recCv"></canvas></div>
+        <dl class="kv" id="recKV"></dl>
+        <p class="note" id="recNote"></p>
+      </div>
+      <details class="assump">
+        <summary data-i18n="asT">Assumptions, limits and sources</summary>
+        <p data-i18n="as1"></p><p data-i18n="as2"></p><p data-i18n="as3"></p><p data-i18n="as4"></p>
+      </details>
+    </div>
+  </details>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const stage=document.getElementById('stage');
+if(!window.THREE||!(function(){try{const c=document.createElement('canvas');return !!(c.getContext('webgl')||c.getContext('experimental-webgl'));}catch(e){return false;}})()){
+  document.getElementById('err').style.display='flex';return;
+}
+const T=THREE;
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TX={
+en:{title:"Reserve valuation: grade equivalents, dilution and recovery",
+sub:"From the in-situ vein to mineable and recoverable value, with grade equivalence for polymetallic ore",
+mUnit:"Lecture units",mUnitV:"9 and 9a: Dilution, recoveries, grade and grade equivalents",mStu:"Student",mIns:"Instructor",
+drag:"Drag to move",home:"Center model",cubeHint:"Click a face or drag the cube",fTop:"TOP",fBot:"BOTTOM",fN:"N",fS:"S",fE:"E",fW:"W",
+rExact:"Exact",rSlide:"As slides",
+view:"View",v3d:"3D",vsect:"Section",vclose:"Close-up",vlong:"Vein face",layers:"Layers",
+lyHost:"Host rock",lyOre:"Vein (ore)",lyMmw:"Minimum width dilution (MMW)",lyDil:"Mining dilution (overbreak)",lyRec:"Unrecovered pillars",lySurf:"Surface",lyDim:"Dimensions",labels:"Labels",
+gEx:"Lecture example",ex_res:"Reserve valuation (slides 12 to 61)",ex_d1:"Dilution example #1 (same SG)",ex_d2:"Dilution example #2 (waste SG 2.4)",ex_d3:"Dilution example #3 (waste 0.05 ozt/ton)",bEx:"Load",
+gEq:"Grade equivalence: assays and prices",gGeo:"Vein geometry",gOw:"Ore and waste",gMin:"Dilution and mine recovery",gRec:"Processing and direct costs",gProd:"Production",gDisp:"Display",
+c_au:"Au assay",c_ag:"Ag assay",c_cu:"Cu assay",c_pAu:"Au price",c_pAg:"Ag price",c_pCu:"Cu price",
+c_dip:"Vein dip (α)",c_H:"Vertical depth (H)",c_L:"Strike length (L)",c_TW:"True vein width (TW)",
+c_SGo:"Ore SG",c_SGw:"Waste SG",c_g:"Vein grade (Au)",c_gw:"Waste grade (Au)",c_pR:"Au price for valuation",
+c_MMW:"Minimum mining width (MMW, apparent)",c_dil:"Mining dilution",c_rec:"Mining recovery",
+c_mr:"Mill recovery",c_sr:"Smelter recovery",c_srf:"Smelting and refining (SRF)",c_cMi:"Mining cost",c_cMl:"Milling cost",c_cGA:"G&A cost",
+c_ann:"Required Au production",c_days:"Operating days",c_exag:"Draw widths at (display only)",
+lnk:"Use the Au equivalent as the vein grade",yr:"yr",dpy:"days/yr",
+help:"Drag to rotate, right-drag or Shift-drag to pan, scroll or pinch to zoom. Drag the top bar of a panel to move it. Widths are drawn exaggerated; lengths and every result are at true scale.",
+infoTitle:"Calculations",tEq:"Grade eq.",tIns:"In-situ",tMin:"Mineable",tRec:"Recoverable",
+eqBase:"Express the equivalent as",uhUS:"Using the US system: ft, ozt/ton, short tons",uhSI:"Using the International System (SI): m, g/t, metric tonnes",rhSlide:"As slides: each intermediate step is rounded like the lecture slides (e.g. AW 6.42 → 6.4 ft, 0.389 → 0.39 ozt/ton), so the results match the class.",rhExact:"Exact: calculations at full precision, without rounding intermediate steps.",rhSI:"Exact: calculations at full precision, without rounding intermediate steps (slide rounding applies only in US units).",eqChart:"Grade equivalence chart: share of the value by metal (100 %)",bAu:"Au",bAg:"Ag",bCu:"Cu",
+e1:"Au value per ton",e2:"Ag value per ton",e3:"Cu value per ton",e4:"Total in-situ value",e5au:"Au equivalent grade",e5ag:"Ag equivalent grade",e5cu:"Cu equivalent grade",
+thMetal:"Metal",thVal:"$/ton-ore",thPct:"% value",thCon:"Contribution",mAu:"Gold",mAg:"Silver",mCu:"Copper",
+kAuEq:"Au equivalent",kAgEq:"Ag equivalent",kCuEq:"Cu equivalent",kSIeq:"Au equivalent in SI",
+eqNote:"{m} carries {p} % of the value, so the equivalent grade moves mostly with the {m} price. An equivalent grade is dynamic: it changes whenever prices, recoveries or costs change, so always state which metals, prices and proportions it includes.",
+eqLnk:" The vein grade in the other tabs is linked to this Au equivalent ({g}).",
+eqSlide:" On slides 12 and 15 the silver results are labelled “ozt Au”; they are ozt Ag.",
+i1:"Dip length",i2:"In-place volume",i3:"Tonnage factor",i4:"In-place tons",i5:"Contained Au",i6:"In-place value",
+kSIv:"Volume (SI)",kSIt:"Ore (metric tonnes)",kSIg:"Grade (SI)",kSIau:"Au contained (SI)",
+insNote:"In-situ resources are the undisturbed vein above cutoff, before any dilution or mining recovery. The tonnage factor is the in-place volume of one ton: {tf} bcft/ton for SG {sg}.",
+ckMmw:"Minimum width dilution needed? (AW < MMW)",yes:"Yes",no:"No",
+m1:"Apparent vein width",m2:"Apparent width difference",m2no:"AW ≥ MMW: no minimum width dilution",m3:"True width added and true mining width",
+m4:"MMW waste",m5:"Total volume, vein + MMW",m6:"Mining dilution",m7:"Mineable tons after recovery",m8:"Diluted (mineable) grade",m9:"Mineable value",
+thSrc:"Source",thTons:"Tons",thG:"Grade",thTG:"T × G (ozt)",rOre:"Ore",rMmw:"Waste (MMW)",rDil:"Waste (mining)",rTot:"Total",
+kWaste:"Waste in mineable tons",kExt:"Extraction ratio (mineable / in-situ tons)",kMet:"Au kept from the in-situ resource",kLoss:"Material left in pillars",
+minNote:"Dilution and recovery take the grade from {g0} to {g1} ({dg} %) and the value from {v0} to {v1}. Waste is always converted from its own volume and SG, because ore and waste have different densities (slide 41).",
+gUse:"{g} ozt/ton carried forward",
+r1:"Gross recoverable value (GRV)",r2:"Direct production cost (DPC)",r3:"Net value per ton mined",r4:"Total recoverable value",r5:"Recoverable Au per ton mined",r6:"Recoverable Au in the block",r7:"Mine or block life",r8:"Daily production",
+kBe:"Break-even diluted grade (GRV = DPC)",kAnn:"Tons mined per year",kMarg:"GRV / DPC",
+chTitle:"Value progression",chIn:"In-situ",chMin:"Mineable",chRec:"Recoverable",
+recOk:"Each ton mined earns {nv} after direct costs, so the block returns {trv}. At {ann} ozt a year it lasts {life} years, mining about {d} tons a day.",
+recBad:"Direct costs ({dpc}) exceed the recoverable value ({grv}): every ton mined loses {nv}. The diluted grade must reach at least {be} to break even.",
+recPoly:" Polymetallic ore: work out the GRV of each metal with its own recoveries and SRF, add them, then subtract the direct cost once (slide 57). A grade equivalent would need a composite price and SRF.",
+recSlide:" With “As slides”, the {oz} ozt uses the unrounded {x} ozt/ton, while the daily rate divides by the rounded {y}, as the slides do.",
+exRes:"Lecture example loaded (slides 12 to 61). Rounding is set to “As slides”, so every intermediate value matches the lecture; switch to “Exact” to carry full precision. ",
+exD:"Dilution example #{n} loaded (slides 25 to 35): 120 × 100 ft block, 10 ft true width, 12 % dilution, no MMW and 100 % recovery, so only dilution acts. ",
+uOre:"tons-ore",uWaste:"tons-waste",uMine:"tons-mineable",uMined:"ton-mined",uDay:"tons-mined/day",uYrs:"yr",
+lOre:"Vein (ore)",lMmw:"MMW dilution",lDil:"Mining dilution",lCrown:"Crown pillar (not recovered)",lSill:"Sill pillar (not recovered)",lSurf:"Surface",lFW:"Footwall",lHW:"Hanging wall",lApp:"apparent",
+fx_e1:"V<sub>Au</sub> = Au assay × Au price",fx_e2:"V<sub>Ag</sub> = Ag assay × Ag price",fx_e3:"V<sub>Cu</sub> = 2,000 lb/ton × (Cu % / 100) × Cu price",fx_e4:"V<sub>total</sub> = V<sub>Au</sub> + V<sub>Ag</sub> + V<sub>Cu</sub>",fx_e5au:"Au Eqv = V<sub>total</sub> / Au price",fx_e5ag:"Ag Eqv = V<sub>total</sub> / Ag price",fx_e5cu:"Cu Eqv (%) = V<sub>total</sub> / (Cu price × 2,000 lb/ton) × 100",fx_i1:"DL = H / sin α",fx_i2:"V<sub>ore</sub> = L × DL × TW",fx_i3:"TF = 2,000 lb/ton / (SG<sub>ore</sub> × 62.4 lb/cft)",fx_i4:"T<sub>ore</sub> = V<sub>ore</sub> × SG<sub>ore</sub> × 62.4 / 2,000",fx_i5:"Au<sub>in-situ</sub> = T<sub>ore</sub> × g<sub>ore</sub>",fx_i6:"Value<sub>in-situ</sub> = T<sub>ore</sub> × g<sub>ore</sub> × P<sub>Au</sub>",fx_m1:"AW = TW / sin α",fx_m2:"ΔAW = MMW − AW",fx_m3a:"ΔTW = ΔAW × sin α",fx_m3b:"MMW<sub>true</sub> = TW + ΔTW",fx_m4a:"V<sub>MMW</sub> = L × DL × ΔTW",fx_m4b:"T<sub>MMW</sub> = V<sub>MMW</sub> × SG<sub>waste</sub> × 62.4 / 2,000",fx_m5:"V<sub>total</sub> = V<sub>ore</sub> + V<sub>MMW</sub>",fx_m6a:"V<sub>dil</sub> = V<sub>total</sub> × dilution %",fx_m6b:"T<sub>dil</sub> = V<sub>dil</sub> × SG<sub>waste</sub> × 62.4 / 2,000",fx_m7:"T<sub>mineable</sub> = (T<sub>ore</sub> + T<sub>MMW</sub> + T<sub>dil</sub>) × mining recovery",fx_m8:"g<sub>diluted</sub> = Σ(T × G) / ΣT = (T<sub>ore</sub>·g<sub>ore</sub> + T<sub>MMW</sub>·g<sub>waste</sub> + T<sub>dil</sub>·g<sub>waste</sub>) / T<sub>mineable</sub>",fx_m9:"Value<sub>mineable</sub> = T<sub>mineable</sub> × g<sub>diluted</sub> × P<sub>Au</sub>",fx_r1:"GRV = g<sub>diluted</sub> × MR × SR × (P<sub>Au</sub> − SRF)",fx_r2:"DPC = mining + milling + G&A",fx_r3:"NV = GRV − DPC",fx_r4:"TRV = NV × T<sub>mineable</sub>",fx_r5:"Au<sub>rec</sub>/ton = g<sub>diluted</sub> × MR × SR",fx_r6:"Au<sub>rec</sub> = T<sub>mineable</sub> × Au<sub>rec</sub>/ton",fx_r7:"Life = Au<sub>rec</sub> / annual Au production",fx_r8:"Daily tons = (annual Au production / operating days) / Au<sub>rec</sub>/ton",m3a:"True width added (ΔTW)",m3b:"True mining width",m4a:"MMW waste volume",m4b:"MMW waste tons",m6a:"Mining dilution volume",m6b:"Mining dilution tons",day:"day",e1t:"Au value per tonne",e2t:"Ag value per tonne",e3t:"Cu value per tonne",fx_e1si:"V<sub>Au</sub> = (Au grade g/t ÷ 31.1035 g/oz) × Au price",fx_e2si:"V<sub>Ag</sub> = (Ag grade g/t ÷ 31.1035 g/oz) × Ag price",fx_e3si:"V<sub>Cu</sub> = 2,204.62 lb/t × (Cu % / 100) × Cu price",fx_e5ausi:"Au Eq (g/t) = V<sub>total</sub> / Au price × 31.1035 g/oz",fx_e5agsi:"Ag Eq (g/t) = V<sub>total</sub> / Ag price × 31.1035 g/oz",fx_e5cusi:"Cu Eq (%) = V<sub>total</sub> / (Cu price × 2,204.62 lb/t) × 100",fx_i3si:"TF = 1 / SG<sub>ore</sub>  (m³/t, water = 1 t/m³)",fx_i4si:"T<sub>ore</sub> = V<sub>ore</sub> × SG<sub>ore</sub>",fx_i5si:"Au<sub>in-situ</sub> (oz) = T<sub>ore</sub> × g<sub>ore</sub> ÷ 31.1035 g/oz",fx_i6si:"Value<sub>in-situ</sub> = Au<sub>in-situ</sub> (oz) × P<sub>Au</sub>",fx_m4bsi:"T<sub>MMW</sub> = V<sub>MMW</sub> × SG<sub>waste</sub>",fx_m6bsi:"T<sub>dil</sub> = V<sub>dil</sub> × SG<sub>waste</sub>",fx_m9si:"Value<sub>mineable</sub> = T<sub>mineable</sub> × g<sub>diluted</sub> ÷ 31.1035 g/oz × P<sub>Au</sub>",fx_r1si:"GRV = (g<sub>diluted</sub> ÷ 31.1035 g/oz) × MR × SR × (P<sub>Au</sub> − SRF)",fx_r5si:"Au<sub>rec</sub> (g/t) = g<sub>diluted</sub> × MR × SR",fx_r6si:"Au<sub>rec</sub> (oz) = T<sub>mineable</sub> × Au<sub>rec</sub> ÷ 31.1035 g/oz",fx_r8si:"Daily t = (annual Au production × 31.1035 g/oz / operating days) / Au<sub>rec</sub> (g/t)",uOreSI:"t ore",uWasteSI:"t waste",uMineSI:"t mineable",uMinedSI:"t mined",uDaySI:"t mined/day",uOreTSI:"t ore",thValSI:"$/t ore",thTonsSI:"Tonnes",thTGsi:"T × G (g)",kUSeq:"Au equivalent in US units",kUSv:"Volume (US)",kUSt:"Ore (short tons)",kUSg:"Grade (US)",kUSau:"Au contained (troy oz)",insNoteSI:"In-situ resources are the undisturbed vein above cutoff, before any dilution or mining recovery. In SI the specific gravity is the density in t/m³, so tonnes = m³ × SG with no 62.4 / 2,000 factor; the tonnage factor is {tf} m³/t for SG {sg}.",siNote:" SI units: m, m³, metric tonnes (1 t = 1.1023 short tons), g/t (1 ozt/ton = 34.2857 g/t) and 1 oz = 31.1035 g; costs per short ton are converted to $/t. Results match the “Exact” US results within about 0.05 %, because the lecture takes water as 62.4 lb/cft while 1 t/m³ is 62.43 lb/cft; “As slides” rounding applies only in US units.",rndOff:"Slide rounding applies only in US units",asT:"Assumptions, limits and sources",
+as1:"Units follow the lecture: short tons (2,000 lb), troy ounces, feet and bank cubic feet (bcft), with water at 62.4 lb/cft, so tons = bcft × SG × 62.4 / 2,000. SI values use 1 ozt = 31.1035 g and 1 short ton = 0.9072 t, so 1 ozt/ton = 34.29 g/t.",
+as2:"Geometry: dip length = H / sin α and apparent width AW = TW / sin α. The MMW is an apparent (horizontal) width: when it exceeds AW, the extra ΔAW × sin α of true width is added as waste along the whole block (minimum width dilution, planned). Mining dilution (overbreak, unplanned) is a percent of the vein + MMW volume, with the waste SG and grade. Mining recovery applies to ore and waste tons alike.",
+as3:"3D model: the waste is drawn half on the footwall and half on the hanging wall, and unrecovered material as crown and sill pillars at the top and bottom of the block, as in the lecture’s mine recovery sketch. Widths are drawn exaggerated by the display factor; every number is at true scale.",
+as4:"Grade equivalence is in-situ (no recoveries), as in the lecture. “As slides” reproduces the lecture’s intermediate rounding; “Exact” carries full precision. Source: MNGN510 Lecture Units 9 and 9a (Zisch, 2026). Numbers are for teaching, not reserve reporting."},
+es:{title:"Valorización de reservas: leyes equivalentes, dilución y recuperación",
+sub:"Del valor in situ de la veta al valor minable y recuperable, con ley equivalente para mineral polimetálico",
+mUnit:"Unidades",mUnitV:"9 y 9a: Dilución, recuperaciones, ley y leyes equivalentes",mStu:"Estudiante",mIns:"Instructor",
+drag:"Arrastra para mover",home:"Centrar modelo",cubeHint:"Haz clic en una cara o arrastra el cubo",fTop:"ARRIBA",fBot:"ABAJO",fN:"N",fS:"S",fE:"E",fW:"O",
+rExact:"Exacto",rSlide:"Como diapositivas",
+view:"Vista",v3d:"3D",vsect:"Sección",vclose:"Detalle",vlong:"Cara de la veta",layers:"Capas",
+lyHost:"Roca encajonante",lyOre:"Veta (mineral)",lyMmw:"Dilución por ancho mínimo (MMW)",lyDil:"Dilución de minado (sobrerrotura)",lyRec:"Pilares no recuperados",lySurf:"Superficie",lyDim:"Cotas",labels:"Etiquetas",
+gEx:"Ejemplo de clase",ex_res:"Valorización de reservas (diapositivas 12 a 61)",ex_d1:"Ejemplo de dilución #1 (misma GE)",ex_d2:"Ejemplo de dilución #2 (GE del desmonte 2.4)",ex_d3:"Ejemplo de dilución #3 (desmonte 0.05 ozt/ton)",bEx:"Cargar",
+gEq:"Ley equivalente: ensayes y precios",gGeo:"Geometría de la veta",gOw:"Mineral y desmonte",gMin:"Dilución y recuperación minera",gRec:"Procesamiento y costos directos",gProd:"Producción",gDisp:"Visualización",
+c_au:"Ensaye de Au",c_ag:"Ensaye de Ag",c_cu:"Ensaye de Cu",c_pAu:"Precio del Au",c_pAg:"Precio de la Ag",c_pCu:"Precio del Cu",
+c_dip:"Buzamiento de la veta (α)",c_H:"Profundidad vertical (H)",c_L:"Longitud según el rumbo (L)",c_TW:"Potencia real de la veta (TW)",
+c_SGo:"GE del mineral",c_SGw:"GE del desmonte",c_g:"Ley de la veta (Au)",c_gw:"Ley del desmonte (Au)",c_pR:"Precio del Au para valorizar",
+c_MMW:"Ancho mínimo de minado (MMW, aparente)",c_dil:"Dilución de minado",c_rec:"Recuperación minera",
+c_mr:"Recuperación en planta",c_sr:"Recuperación en fundición",c_srf:"Fundición y refinación (SRF)",c_cMi:"Costo de mina",c_cMl:"Costo de planta",c_cGA:"Costo G&A",
+c_ann:"Producción de Au requerida",c_days:"Días de operación",c_exag:"Anchos dibujados a (solo visual)",
+lnk:"Usar el Au equivalente como ley de la veta",yr:"año",dpy:"días/año",
+help:"Arrastra para rotar, clic derecho o Shift para desplazar, rueda o pellizco para acercar. Arrastra la barra superior de cada panel para moverlo. Los anchos se dibujan exagerados; las longitudes y todos los resultados están a escala real.",
+infoTitle:"Cálculos",tEq:"Ley eq.",tIns:"In situ",tMin:"Minable",tRec:"Recuperable",
+eqBase:"Expresar el equivalente en",uhUS:"Usando el sistema US: ft, ozt/ton, toneladas cortas",uhSI:"Usando el Sistema Internacional (SI): m, g/t, toneladas métricas",rhSlide:"Como diapositivas: cada paso intermedio se redondea como en las diapositivas de la clase (por ejemplo, AW 6.42 → 6.4 ft, 0.389 → 0.39 ozt/ton), así que los resultados coinciden con la clase.",rhExact:"Exacto: cálculos con precisión completa, sin redondear los pasos intermedios.",rhSI:"Exacto: cálculos con precisión completa, sin redondear los pasos intermedios (el redondeo de las diapositivas solo aplica en unidades US).",eqChart:"Gráfico de ley equivalente: aporte de cada metal al valor (100 %)",bAu:"Au",bAg:"Ag",bCu:"Cu",
+e1:"Valor del Au por tonelada",e2:"Valor de la Ag por tonelada",e3:"Valor del Cu por tonelada",e4:"Valor in situ total",e5au:"Ley equivalente de Au",e5ag:"Ley equivalente de Ag",e5cu:"Ley equivalente de Cu",
+thMetal:"Metal",thVal:"$/ton-mineral",thPct:"% del valor",thCon:"Aporte",mAu:"Oro",mAg:"Plata",mCu:"Cobre",
+kAuEq:"Au equivalente",kAgEq:"Ag equivalente",kCuEq:"Cu equivalente",kSIeq:"Au equivalente en SI",
+eqNote:"El {m} aporta el {p} % del valor, así que la ley equivalente se mueve sobre todo con el precio del {m}. La ley equivalente es dinámica: cambia cuando cambian los precios, las recuperaciones o los costos, así que siempre indica qué metales, precios y proporciones incluye.",
+eqLnk:" La ley de la veta en las otras pestañas está vinculada a este Au equivalente ({g}).",
+eqSlide:" En las diapositivas 12 y 15 los resultados de plata dicen “ozt Au”; son ozt Ag.",
+i1:"Longitud según el buzamiento",i2:"Volumen in situ",i3:"Factor de tonelaje",i4:"Toneladas in situ",i5:"Au contenido",i6:"Valor in situ",
+kSIv:"Volumen (SI)",kSIt:"Mineral (toneladas métricas)",kSIg:"Ley (SI)",kSIau:"Au contenido (SI)",
+insNote:"Los recursos in situ son la veta sin perturbar sobre la ley de corte, antes de aplicar dilución o recuperación minera. El factor de tonelaje es el volumen in situ de una tonelada: {tf} bcft/ton para una GE de {sg}.",
+ckMmw:"¿Hay dilución por ancho mínimo? (AW < MMW)",yes:"Sí",no:"No",
+m1:"Ancho aparente de la veta",m2:"Diferencia de ancho aparente",m2no:"AW ≥ MMW: no hay dilución por ancho mínimo",m3:"Potencia real agregada y ancho real de minado",
+m4:"Desmonte por MMW",m5:"Volumen total, veta + MMW",m6:"Dilución de minado",m7:"Toneladas minables tras la recuperación",m8:"Ley diluida (minable)",m9:"Valor minable",
+thSrc:"Origen",thTons:"Toneladas",thG:"Ley",thTG:"T × L (ozt)",rOre:"Mineral",rMmw:"Desmonte (MMW)",rDil:"Desmonte (minado)",rTot:"Total",
+kWaste:"Desmonte en las toneladas minables",kExt:"Razón de extracción (ton minables / in situ)",kMet:"Au conservado del recurso in situ",kLoss:"Material que queda en pilares",
+minNote:"La dilución y la recuperación llevan la ley de {g0} a {g1} ({dg} %) y el valor de {v0} a {v1}. El desmonte siempre se convierte desde su propio volumen y GE, porque el mineral y el desmonte tienen densidades distintas (diapositiva 41).",
+gUse:"se arrastra {g} ozt/ton",
+r1:"Valor recuperable bruto (GRV)",r2:"Costo directo de producción (DPC)",r3:"Valor neto por tonelada minada",r4:"Valor recuperable total",r5:"Au recuperable por tonelada minada",r6:"Au recuperable en el bloque",r7:"Vida de la mina o del bloque",r8:"Producción diaria",
+kBe:"Ley diluida de equilibrio (GRV = DPC)",kAnn:"Toneladas minadas por año",kMarg:"GRV / DPC",
+chTitle:"Progresión del valor",chIn:"In situ",chMin:"Minable",chRec:"Recuperable",
+recOk:"Cada tonelada minada deja {nv} después de los costos directos, así que el bloque rinde {trv}. A {ann} ozt por año dura {life} años, minando unas {d} toneladas por día.",
+recBad:"Los costos directos ({dpc}) superan el valor recuperable ({grv}): cada tonelada minada pierde {nv}. La ley diluida debe llegar al menos a {be} para no perder.",
+recPoly:" Mineral polimetálico: calcula el GRV de cada metal con sus propias recuperaciones y SRF, súmalos y resta el costo directo una sola vez (diapositiva 57). Una ley equivalente necesitaría un precio y un SRF compuestos.",
+recSlide:" Con “Como diapositivas”, las {oz} ozt usan {x} ozt/ton sin redondear, mientras que la producción diaria divide entre {y} redondeado, igual que en las diapositivas.",
+exRes:"Ejemplo de clase cargado (diapositivas 12 a 61). El redondeo está en “Como diapositivas”, así que cada valor intermedio coincide con la clase; cambia a “Exacto” para usar precisión completa. ",
+exD:"Ejemplo de dilución #{n} cargado (diapositivas 25 a 35): bloque de 120 × 100 ft, potencia real de 10 ft, 12 % de dilución, sin MMW y con 100 % de recuperación, para ver solo el efecto de la dilución. ",
+uOre:"ton-mineral",uWaste:"ton-desmonte",uMine:"ton-minables",uMined:"ton-minada",uDay:"ton-minadas/día",uYrs:"años",
+lOre:"Veta (mineral)",lMmw:"Dilución por MMW",lDil:"Dilución de minado",lCrown:"Pilar corona (no recuperado)",lSill:"Pilar puente (no recuperado)",lSurf:"Superficie",lFW:"Caja piso",lHW:"Caja techo",lApp:"aparente",
+fx_e1:"V<sub>Au</sub> = ensaye de Au × precio del Au",fx_e2:"V<sub>Ag</sub> = ensaye de Ag × precio de la Ag",fx_e3:"V<sub>Cu</sub> = 2,000 lb/ton × (Cu % / 100) × precio del Cu",fx_e5au:"Au Eq = V<sub>total</sub> / precio del Au",fx_e5ag:"Ag Eq = V<sub>total</sub> / precio de la Ag",fx_e5cu:"Cu Eq (%) = V<sub>total</sub> / (precio del Cu × 2,000 lb/ton) × 100",fx_i5:"Au<sub>in situ</sub> = T<sub>mineral</sub> × g<sub>mineral</sub>",fx_i6:"Valor<sub>in situ</sub> = T<sub>mineral</sub> × g<sub>mineral</sub> × P<sub>Au</sub>",fx_i2:"V<sub>mineral</sub> = L × DL × TW",fx_i3:"TF = 2,000 lb/ton / (GE<sub>mineral</sub> × 62.4 lb/pie³)",fx_i4:"T<sub>mineral</sub> = V<sub>mineral</sub> × GE<sub>mineral</sub> × 62.4 / 2,000",fx_m3b:"MMW<sub>real</sub> = TW + ΔTW",fx_m4b:"T<sub>MMW</sub> = V<sub>MMW</sub> × GE<sub>desmonte</sub> × 62.4 / 2,000",fx_m5:"V<sub>total</sub> = V<sub>mineral</sub> + V<sub>MMW</sub>",fx_m6a:"V<sub>dil</sub> = V<sub>total</sub> × % de dilución",fx_m6b:"T<sub>dil</sub> = V<sub>dil</sub> × GE<sub>desmonte</sub> × 62.4 / 2,000",fx_m7:"T<sub>minable</sub> = (T<sub>mineral</sub> + T<sub>MMW</sub> + T<sub>dil</sub>) × recuperación minera",fx_m8:"g<sub>diluida</sub> = Σ(T × L) / ΣT = (T<sub>mineral</sub>·g<sub>mineral</sub> + T<sub>MMW</sub>·g<sub>desmonte</sub> + T<sub>dil</sub>·g<sub>desmonte</sub>) / T<sub>minable</sub>",fx_m9:"Valor<sub>minable</sub> = T<sub>minable</sub> × g<sub>diluida</sub> × P<sub>Au</sub>",fx_r1:"GRV = g<sub>diluida</sub> × MR × SR × (P<sub>Au</sub> − SRF)",fx_r2:"DPC = mina + planta + G&A",fx_r4:"TRV = NV × T<sub>minable</sub>",fx_r5:"Au<sub>rec</sub>/ton = g<sub>diluida</sub> × MR × SR",fx_r6:"Au<sub>rec</sub> = T<sub>minable</sub> × Au<sub>rec</sub>/ton",fx_r7:"Vida = Au<sub>rec</sub> / producción anual de Au",fx_r8:"Ton por día = (producción anual de Au / días de operación) / Au<sub>rec</sub>/ton",m3a:"Potencia real agregada (ΔTW)",m3b:"Ancho real de minado",m4a:"Volumen de desmonte por MMW",m4b:"Toneladas de desmonte por MMW",m6a:"Volumen de dilución de minado",m6b:"Toneladas de dilución de minado",day:"día",e1t:"Valor del Au por tonelada métrica",e2t:"Valor de la Ag por tonelada métrica",e3t:"Valor del Cu por tonelada métrica",fx_e1si:"V<sub>Au</sub> = (ley de Au g/t ÷ 31.1035 g/oz) × precio del Au",fx_e2si:"V<sub>Ag</sub> = (ley de Ag g/t ÷ 31.1035 g/oz) × precio de la Ag",fx_e3si:"V<sub>Cu</sub> = 2,204.62 lb/t × (Cu % / 100) × precio del Cu",fx_e5ausi:"Au Eq (g/t) = V<sub>total</sub> / precio del Au × 31.1035 g/oz",fx_e5agsi:"Ag Eq (g/t) = V<sub>total</sub> / precio de la Ag × 31.1035 g/oz",fx_e5cusi:"Cu Eq (%) = V<sub>total</sub> / (precio del Cu × 2,204.62 lb/t) × 100",fx_i3si:"TF = 1 / GE<sub>mineral</sub>  (m³/t, agua = 1 t/m³)",fx_i4si:"T<sub>mineral</sub> = V<sub>mineral</sub> × GE<sub>mineral</sub>",fx_i5si:"Au<sub>in situ</sub> (oz) = T<sub>mineral</sub> × g<sub>mineral</sub> ÷ 31.1035 g/oz",fx_i6si:"Valor<sub>in situ</sub> = Au<sub>in situ</sub> (oz) × P<sub>Au</sub>",fx_m4bsi:"T<sub>MMW</sub> = V<sub>MMW</sub> × GE<sub>desmonte</sub>",fx_m6bsi:"T<sub>dil</sub> = V<sub>dil</sub> × GE<sub>desmonte</sub>",fx_m9si:"Valor<sub>minable</sub> = T<sub>minable</sub> × g<sub>diluida</sub> ÷ 31.1035 g/oz × P<sub>Au</sub>",fx_r1si:"GRV = (g<sub>diluida</sub> ÷ 31.1035 g/oz) × MR × SR × (P<sub>Au</sub> − SRF)",fx_r5si:"Au<sub>rec</sub> (g/t) = g<sub>diluida</sub> × MR × SR",fx_r6si:"Au<sub>rec</sub> (oz) = T<sub>minable</sub> × Au<sub>rec</sub> ÷ 31.1035 g/oz",fx_r8si:"t por día = (producción anual de Au × 31.1035 g/oz / días de operación) / Au<sub>rec</sub> (g/t)",uOreSI:"t mineral",uWasteSI:"t desmonte",uMineSI:"t minables",uMinedSI:"t minada",uDaySI:"t minadas/día",uOreTSI:"t mineral",thValSI:"$/t mineral",thTonsSI:"Toneladas",thTGsi:"T × L (g)",kUSeq:"Au equivalente en unidades US",kUSv:"Volumen (US)",kUSt:"Mineral (toneladas cortas)",kUSg:"Ley (US)",kUSau:"Au contenido (oz troy)",insNoteSI:"Los recursos in situ son la veta sin perturbar sobre la ley de corte, antes de aplicar dilución o recuperación minera. En SI la gravedad específica es la densidad en t/m³, así que toneladas = m³ × GE sin el factor 62.4 / 2,000; el factor de tonelaje es {tf} m³/t para una GE de {sg}.",siNote:" Unidades SI: m, m³, toneladas métricas (1 t = 1.1023 toneladas cortas), g/t (1 ozt/ton = 34.2857 g/t) y 1 oz = 31.1035 g; los costos por tonelada corta se convierten a $/t. Los resultados coinciden con los de US en “Exacto” con una diferencia de alrededor de 0.05 %, porque la clase toma el agua como 62.4 lb/pie³ y 1 t/m³ equivale a 62.43 lb/pie³; el redondeo “Como diapositivas” solo aplica en unidades US.",rndOff:"El redondeo de las diapositivas solo aplica en unidades US",asT:"Supuestos, límites y fuentes",
+as1:"Las unidades siguen la clase: toneladas cortas (2,000 lb), onzas troy, pies y pies cúbicos in situ (bcft), con agua a 62.4 lb/pie³, así que toneladas = bcft × GE × 62.4 / 2,000. Los valores en SI usan 1 ozt = 31.1035 g y 1 tonelada corta = 0.9072 t, así que 1 ozt/ton = 34.29 g/t.",
+as2:"Geometría: longitud según el buzamiento = H / sen α y ancho aparente AW = TW / sen α. El MMW es un ancho aparente (horizontal): si supera al AW, el exceso ΔAW × sen α de potencia real se agrega como desmonte en todo el bloque (dilución por ancho mínimo, planificada). La dilución de minado (sobrerrotura, no planificada) es un porcentaje del volumen de veta + MMW, con la GE y la ley del desmonte. La recuperación minera se aplica por igual a las toneladas de mineral y de desmonte.",
+as3:"Modelo 3D: el desmonte se dibuja mitad en la caja piso y mitad en la caja techo, y el material no recuperado como pilares corona y puente arriba y abajo del bloque, como en el esquema de recuperación minera de la clase. Los anchos se exageran según el factor de visualización; todas las cifras están a escala real.",
+as4:"La ley equivalente es in situ (sin recuperaciones), como en la clase. “Como diapositivas” reproduce los redondeos intermedios de la clase; “Exacto” usa precisión completa. Fuente: MNGN510 Lecture Units 9 y 9a (Zisch, 2026). Las cifras son didácticas, no para reportar reservas."}
+};
+let lang='en';
+const t=k=>(TX[lang][k]??TX.en[k]??k);
+const loc=()=>lang==='es'?'es-PE':'en-US';
+const nf=(x,d=0)=>Number.isFinite(x)?x.toLocaleString(loc(),{minimumFractionDigits:d,maximumFractionDigits:d}):'–';
+const nfx=(x,d=1)=>Number.isFinite(x)?x.toLocaleString(loc(),{minimumFractionDigits:0,maximumFractionDigits:d}):'–';
+const fmt=(s,o)=>s.replace(/\{(\w+)\}/g,(m,k)=>o[k]??m);
+const usd=(x,d=0)=>(x<0?'−$':'$')+nf(Math.abs(x),d);
+const ft=(x,d=2)=>nfx(x,d)+' ft';
+const Ln=(x,d=2)=>units==='si'?nfx(x*FTM,d)+' m':nfx(x,d)+' ft';
+
+/* ---------- constants and parameters ---------- */
+const LBFT=62.4,LBT=2000,OZG=31.1034768,STT=0.90718474,FTM=0.3048;
+const GPT=OZG/STT; // g/t per ozt/ton
+const P={au:.35,ag:9.1,cu:.4,pAu:4000,pAg:60,pCu:6,dip:75,H:483,L:750,TW:6.2,SGo:2.8,SGw:2.5,g:.5,gw:.1,pR:2160,
+ MMW:8,dil:15,rec:85,mr:90,sr:85,srf:60,cMi:40,cMl:58.5,cGA:2.25,ann:20000,days:300,exag:3,lnk:false,slide:true,base:'au'};
+// [group,id,kind,min,max,step,decimals]
+const CTRL=[
+ ['eq','au','ozt',0,2,0.01,2],['eq','ag','ozt',0,50,0.05,2],['eq','cu','pct',0,5,0.01,2],
+ ['eq','pAu','usdoz',500,6000,10,0],['eq','pAg','usdoz',5,150,0.5,2],['eq','pCu','usdlb',1,15,0.05,2],
+ ['geo','dip','deg',30,90,1,0],['geo','H','ft',20,2000,1,1],['geo','L','ft',20,2000,10,0],['geo','TW','ft',1,40,0.1,1],
+ ['ow','SGo','sg',2,5,0.05,2],['ow','SGw','sg',2,4,0.05,2],['ow','g','ozt',0.01,2,0.01,2],['ow','gw','ozt',0,1,0.01,2],['ow','pR','usdoz',500,6000,10,0],
+ ['min','MMW','ft',0,30,0.1,1],['min','dil','pct',0,50,1,0],['min','rec','pct',50,100,1,0],
+ ['rec','mr','pct',50,100,1,0],['rec','sr','pct',50,100,1,0],['rec','srf','usdoz',0,300,1,0],['rec','cMi','usdt',0,300,0.5,2],['rec','cMl','usdt',0,300,0.5,2],['rec','cGA','usdt',0,50,0.25,2],
+ ['prod','ann','ozyr',1000,200000,500,0],['prod','days','dyr',200,365,1,0],
+ ['disp','exag','x',1,10,0.5,1]];
+const ctrlOf=id=>CTRL.find(c=>c[1]===id);
+let units='us';
+const isSI=()=>units==='si';
+const UFAC={ft:FTM,ozt:GPT,usdt:1/STT};
+const uf=k=>isSI()&&UFAC[k]?UFAC[k]:1;
+// SI slider ranges [min,max,step,decimals]
+const SIR={H:[5,600,0.5,1],L:[5,600,5,0],TW:[0.3,12,0.05,2],MMW:[0,9,0.05,2],au:[0,70,0.1,1],ag:[0,1700,1,0],g:[0.3,70,0.1,2],gw:[0,35,0.1,2],cMi:[0,330,0.5,2],cMl:[0,330,0.5,2],cGA:[0,55,0.25,2]};
+const siR=c=>isSI()&&SIR[c[1]]?SIR[c[1]]:null;
+function unitStr(k,v,d){const n=nf(v,d),si=isSI();switch(k){case'ozt':return n+(si?' g/t':' ozt/ton');case'pct':return n+' %';case'usdoz':return '$'+n+(si?'/oz':'/ozt');case'usdlb':return '$'+n+'/lb';
+ case'deg':return n+'°';case'ft':return nfx(v,d)+(si?' m':' ft');case'sg':return n;case'usdt':return '$'+n+(si?'/t':'/ton');case'ozyr':return n+(si?' oz/':' ozt/')+t('yr');case'dyr':return n+' '+t('dpy');case'x':return '× '+nfx(v,1);}return n;}
+function outText(c){const r=siR(c),d=r?r[3]:c[6];if(c[1]==='g'&&P.lnk)return unitStr('ozt',eqCalc().au*uf('ozt'),d+1);return unitStr(c[2],P[c[1]]*uf(c[2]),d);}
+function syncSlider(c){const el=document.getElementById('r_'+c[1]),r=siR(c),f=uf(c[2]);
+ el.min=r?r[0]:c[3]*f;el.max=r?r[1]:c[4]*f;el.step=r?r[2]:c[5];el.value=P[c[1]]*f;
+ el.disabled=(c[1]==='g'&&P.lnk);document.getElementById('o_'+c[1]).textContent=outText(c);}
+function buildControls(){
+ for(const c of CTRL){const id=c[1],div=document.createElement('div');div.className='sl';
+  div.innerHTML=`<label for="r_${id}"><span data-i18n="c_${id}"></span><output id="o_${id}"></output></label><input type="range" id="r_${id}">`;
+  document.getElementById('c_'+c[0]).appendChild(div);
+  div.querySelector('input').addEventListener('input',e=>{P[id]=parseFloat(e.target.value)/uf(c[2]);document.getElementById('o_'+id).textContent=outText(c);onChange();});}
+ CTRL.forEach(syncSlider);
+}
+function setP(id,v){P[id]=v;const c=ctrlOf(id);if(c)syncSlider(c);}
+
+/* ---------- engineering model ---------- */
+const SL=()=>P.slide&&units==='us';
+const rS=(x,s)=>SL()?Math.round(x/s+1e-9)*s:x;                 // round like the slides
+const rT=x=>!SL()?x:x>=20000?Math.round(x/100)*100:x>=1000?Math.round(x/10)*10:Math.round(x); // tons, volumes: 3 to 4 figures
+const tonsOf=(v,sg)=>v*sg*LBFT/LBT;
+function eqCalc(p=P){
+ const vAu=p.au*p.pAu,vAg=p.ag*p.pAg,vCu=LBT*p.cu/100*p.pCu,tot=vAu+vAg+vCu;
+ return {vAu,vAg,vCu,tot,au:tot/p.pAu,ag:tot/p.pAg,cu:tot/(p.pCu*LBT)*100};
+}
+function model(p=P){
+ const E=eqCalc(p),g=p.lnk?E.au:p.g;
+ const a=p.dip*Math.PI/180,sa=Math.sin(a),ca=Math.cos(a);
+ const DLx=p.H/sa,DL=rS(DLx,1);
+ // in-situ
+ const Vo=p.L*DL*p.TW,TF=LBT/(p.SGo*LBFT),To=rT(tonsOf(Vo,p.SGo)),ozIn=To*g,Vin=ozIn*p.pR;
+ // minimum mining width
+ const AWx=p.TW/sa,AW=rS(AWx,0.1),need=p.MMW>AW+1e-9;
+ const dAW=need?p.MMW-AW:0,dTW=need?rS(dAW*sa,0.1):0,MMWt=p.TW+dTW;
+ const Vm=p.L*DL*dTW,Tm=rT(tonsOf(Vm,p.SGw));
+ // mining dilution
+ const Vt=Vo+Vm,Vd=rT(Vt*p.dil/100),Td=rT(tonsOf(Vd,p.SGw));
+ // recovery
+ const R=p.rec/100,To2=rT(To*R),Tm2=rT(Tm*R),Td2=rT(Td*R),T=To2+Tm2+Td2;
+ const oz1=To2*g,oz2=Tm2*p.gw,oz3=Td2*p.gw,OZ=oz1+oz2+oz3,gD=T>0?OZ/T:0,gU=SL()?Math.round(gD*100)/100:gD;
+ const Vmin=T*gU*p.pR;
+ // recoverable
+ const rr=p.mr/100*p.sr/100,GRV=rS(gU*rr*(p.pR-p.srf),0.01),DPC=p.cMi+p.cMl+p.cGA,NV=GRV-DPC,TRV=NV*T;
+ const recx=gU*rr,recU=rS(recx,0.01),ozR=SL()?Math.round(T*recx/10)*10:T*recx;
+ const life=rS(ozR/p.ann,0.1),daily=p.ann/p.days/recU;
+ const be=DPC/(rr*(p.pR-p.srf));
+ return {E,g,a,sa,ca,DLx,DL,Vo,TF,To,ozIn,Vin,AWx,AW,need,dAW,dTW,MMWt,Vm,Tm,Vt,Vd,Td,R,To2,Tm2,Td2,T,oz1,oz2,oz3,OZ,gD,gU,Vmin,
+  rr,GRV,DPC,NV,TRV,recx,recU,ozR,life,daily,be};
+}
+
+/* ---------- renderer / scene ---------- */
+const canvas=document.getElementById('c');
+const renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+const scene=new T.Scene();
+const camera=new T.PerspectiveCamera(38,1,0.5,20000);
+const ocam=new T.OrthographicCamera(-1,1,1,-1,-1000,1000);let ortho=false;const cam=()=>ortho?ocam:camera;
+const SECT_HIDE=new Set(['lOre','lMmw','lDil','lCrown','lSill','dL','dDL']);
+scene.add(new T.HemisphereLight(0xffffff,0x3a3c3e,0.9));
+const sun=new T.DirectionalLight(0xffffff,0.6);sun.position.set(300,500,400);scene.add(sun);
+const back=new T.DirectionalLight(0xffffff,0.3);back.position.set(-200,-100,-300);scene.add(back);
+const world=new T.Group();scene.add(world);
+const V=(x,y,z)=>new T.Vector3(x,y,z);
+const C={ore:'#C9923A',oreEdge:'#7A5A1E',mmw:'#7DB341',mmwEdge:'#4E7A22',dil:'#7C83E6',dilEdge:'#454CB0',rec:'#C9483C',recEdge:'#7E2A22',
+ host:'#9AA5AD',surf:'#7DB341',dim:'#56626B',aw:'#E0503F',tw:'#E8A93A',mm:'#5E9A2A',au:'#C9923A',ag:'#8E989F',cu:'#C46A3A',vMin:'#2F6DB5',vRec:'#1D8A6A'};
+let objs={},bounds={span:800},VIEWS={};
+const disposeTree=o=>o.traverse(c=>{if(c.geometry)c.geometry.dispose();if(c.material)(Array.isArray(c.material)?c.material:[c.material]).forEach(m=>m.dispose());});
+function add(o,k){world.add(o);(objs[k]=objs[k]||[]).push(o);return o;}
+function boxAt(x0,x1,y0,y1,z0,z1){const g=new T.BoxGeometry(x1-x0,y1-y0,z1-z0);g.translate((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);return g;}
+function quadY(x0,x1,z0,z1,y){const g=new T.PlaneGeometry(x1-x0,z1-z0);g.rotateX(-Math.PI/2);g.translate((x0+x1)/2,y,(z0+z1)/2);return g;}
+function segs(arr,col,k,op=1){const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(arr,3));return add(new T.LineSegments(g,new T.LineBasicMaterial({color:col,transparent:op<1,opacity:op})),k);}
+function dimLine(a,b,tick,out){out.push(a.x,a.y,a.z,b.x,b.y,b.z);[a,b].forEach(p=>out.push(p.x-tick.x,p.y-tick.y,p.z-tick.z,p.x+tick.x,p.y+tick.y,p.z+tick.z));}
+
+function build3D(){
+ while(world.children.length){const c=world.children.pop();disposeTree(c);}
+ objs={};for(const k in LBL)LBL[k].pos=null;
+ const m=model(),X=P.exag,H=P.H,L=P.L,x0=-L/2,x1=L/2,sa=m.sa,ca=m.ca,ct=ca/sa;
+ const AW=m.AWx,dA=Math.max(0,P.MMW-AW),dd=P.dil/100*(AW+dA);
+ const fwM=-dA/2,hwM=AW+dA/2,fwO=fwM-dd/2,hwO=hwM+dd/2;
+ // u = horizontal offset from the footwall contact (true ft, drawn × X)
+ const Pt=(x,y,u)=>V(x,y,-y*ct+u*X);
+ function slab(u0,u1,ya,yb){const g=new T.BoxGeometry(1,1,1),pa=g.attributes.position;
+  for(let i=0;i<pa.count;i++){const p=Pt(pa.getX(i)<0?x0:x1,pa.getY(i)<0?ya:yb,pa.getZ(i)<0?u0:u1);pa.setXYZ(i,p.x,p.y,p.z);}
+  g.computeVertexNormals();return g;}
+ function solid(g,col,op,k,edge){
+  add(new T.Mesh(g,new T.MeshStandardMaterial({color:col,roughness:0.8,transparent:op<1,opacity:op,depthWrite:op>=1})),k);
+  if(edge)add(new T.LineSegments(new T.EdgesGeometry(g),new T.LineBasicMaterial({color:edge,transparent:true,opacity:0.7})),k);}
+ const recOn=L_rec.checked&&P.rec<100,f=(1-P.rec/100)/2;
+ const yS0=recOn?-H*(1-f):-H,yS1=recOn?-H*f:0;
+ solid(slab(0,AW,yS0,yS1),C.ore,1,'ore',C.oreEdge);
+ if(dA>0){solid(slab(fwM,0,yS0,yS1),C.mmw,0.85,'mmw',C.mmwEdge);solid(slab(AW,hwM,yS0,yS1),C.mmw,0.85,'mmw',C.mmwEdge);}
+ if(dd>0){solid(slab(fwO,fwM,yS0,yS1),C.dil,0.45,'dil',C.dilEdge);solid(slab(hwM,hwO,yS0,yS1),C.dil,0.45,'dil',C.dilEdge);}
+ if(recOn){solid(slab(fwO,hwO,-H*f,0),C.rec,0.92,'rec',C.recEdge);solid(slab(fwO,hwO,-H,-H*(1-f)),C.rec,0.92,'rec',C.recEdge);
+  setLabel('lCrown',Pt(x0+L*0.2,-H*f/2,hwO),'s','rec');setLabel('lSill',Pt(x0+L*0.2,-H*(1-f/2),hwO),'s','rec');}
+ setLabel('lOre',Pt(x0+L*0.3,(yS0+yS1)/2,AW/2),'o','ore');
+ if(dA>0)setLabel('lMmw',Pt(x0+L*0.42,-H*0.3,hwM),'z','mmw');
+ if(dd>0)setLabel('lDil',Pt(x0+L*0.8,-H*0.72,fwO),'p','dil');
+ // host rock and surface
+ const B=Math.max(20,0.12*Math.max(L,H)),zlo=fwO*X-B,zhi=H*ct+hwO*X+B;
+ const hg=boxAt(x0-B,x1+B,-H-B,0,zlo,zhi);
+ add(new T.Mesh(hg,new T.MeshStandardMaterial({color:C.host,transparent:true,opacity:0.07,depthWrite:false,side:T.DoubleSide})),'host');
+ add(new T.LineSegments(new T.EdgesGeometry(hg),new T.LineBasicMaterial({color:C.host,transparent:true,opacity:0.75})),'host');
+ setLabel('lFW',Pt(x0,-H*0.3,fwO).add(V(0,0,-Math.max(10,B*0.25))),'r','host');
+ setLabel('lHW',Pt(x0,-H*0.3,hwO).add(V(0,0,Math.max(10,B*0.25))),'r','host');
+ add(new T.Mesh(quadY(x0-B,x1+B,zlo,zhi,0.05),new T.MeshBasicMaterial({color:C.surf,transparent:true,opacity:0.14,depthWrite:false,side:T.DoubleSide})),'surf');
+ const sf=[];[[x0-B,zlo,x1+B,zlo],[x1+B,zlo,x1+B,zhi],[x1+B,zhi,x0-B,zhi],[x0-B,zhi,x0-B,zlo]].forEach(([a,b,c,d])=>sf.push(a,0.1,b,c,0.1,d));
+ [0,AW].forEach(u=>{const p=Pt(x0,0.1,u),q=Pt(x1,0.1,u);sf.push(p.x,p.y,p.z,q.x,q.y,q.z);});
+ segs(sf,C.surf,'surf');setLabel('lSurf',V(x0-B+8,0,zhi),'r','surf');
+ // dimensions
+ const tk=Math.max(1.5,Math.max(L,H)*0.006),dl=[];
+ const zS=zlo+B*0.35;dimLine(V(x0,0.5,zS),V(x1,0.5,zS),V(0,0,tk),dl);
+ setLabel('dL',V(0,0.5,zS),'d','dim',()=>'L = '+Ln(P.L,units==='si'?1:0));
+ const xD=x1+B*0.4,uD=fwO-4/X;dimLine(Pt(xD,0,uD),Pt(xD,-H,uD),V(tk,0,0),dl);
+ setLabel('dDL',Pt(xD,-H/2,uD),'d','dim',()=>t('i1')+' = '+Ln(m.DL,1));
+ const zH=zhi-B*0.4,xH=x0-B*0.45;dimLine(V(xH,0,zH),V(xH,-H,zH),V(tk,0,0),dl);
+ setLabel('dH',V(xH,-H/2,zH),'d','dim',()=>'H = '+Ln(P.H,1));
+ segs(dl,C.dim,'dim');
+ // AW, TW and MMW on the end face
+ const xe=x0-0.3,yM=-H/2,aw=[],tw=[],mm=[],sk=Math.max(0.6,X*0.4);
+ dimLine(Pt(xe,yM,0),Pt(xe,yM,AW),V(0,sk,0),aw);segs(aw,C.aw,'dim');
+ const p0=Pt(xe,-H*0.4,0),p1=p0.clone().add(V(0,ca*P.TW*X,sa*P.TW*X));tw.push(p0.x,p0.y,p0.z,p1.x,p1.y,p1.z);segs(tw,C.tw,'dim');
+ setLabel('dAW',Pt(xe,yM-sk*3,AW/2),'f','dim',()=>'AW = '+Ln(m.AW));
+ setLabel('dTW',p0.clone().lerp(p1,0.5).add(V(0,sk*3,-sk*3)),'b','dim',()=>'TW = '+Ln(P.TW));
+ if(P.MMW>0){const yW=-H*0.6;dimLine(Pt(xe,yW,AW/2-P.MMW/2),Pt(xe,yW,AW/2+P.MMW/2),V(0,sk,0),mm);segs(mm,C.mm,'dim');
+  setLabel('dMMW',Pt(xe,yW-sk*3,AW/2),'z','dim',()=>'MMW = '+(units==='si'?nf(P.MMW*FTM,2)+' m':nf(P.MMW,1)+' ft')+' ('+t('lApp')+')');}
+ // dip angle at the outcrop
+ const Rr=Math.min(H*0.2,90),o=V(xe,0,0),arc=[];
+ arc.push(o.x,o.y,o.z,o.x,o.y,o.z+Rr*1.2);arc.push(o.x,o.y,o.z,o.x,o.y-Rr*1.2*sa,o.z+Rr*1.2*ca);
+ for(let j=0;j<16;j++){const a0=-m.a*j/16,a1=-m.a*(j+1)/16;arc.push(o.x,o.y+Rr*Math.sin(a0),o.z+Rr*Math.cos(a0),o.x,o.y+Rr*Math.sin(a1),o.z+Rr*Math.cos(a1));}
+ segs(arc,C.aw,'dim');
+ setLabel('dDip',V(o.x,o.y+Rr*1.25*Math.sin(-m.a/2),o.z+Rr*1.25*Math.cos(-m.a/2)),'d','dim',()=>'α = '+nf(P.dip)+'°');
+ // views
+ const c=V(0,-H/2,H/2*ct+AW*X/2),span=Math.max(L+2*B,H+B,zhi-zlo);bounds.span=span;
+ const ce=V(x0,yM,H/2*ct+AW*X/2),wDraw=(hwO-fwO)*X;
+ VIEWS={'3d':{target:c,r:span*1.55,th:-0.95,ph:1.1},
+  sect:{target:V(0,-H/2,(zlo+zhi)/2),r:Math.max(H+B,zhi-zlo)*1.75,th:-Math.PI/2,ph:Math.PI/2},
+  close:{target:ce,r:Math.max(40,wDraw*4.5),th:-Math.PI/2,ph:Math.PI/2},
+  long:{target:c,r:Math.max(L,H)*2.1,th:0,ph:Math.max(0.2,m.a)}};
+ applyLayers();refreshLabels();
+}
+
+/* ---------- labels ---------- */
+const labelsEl=document.getElementById('labels');const LBL={};
+function setLabel(key,pos,k,layer,fn){let L=LBL[key];if(!L){const el=document.createElement('div');labelsEl.appendChild(el);L=LBL[key]={el,key};}
+ L.pos=pos;L.k=k;L.layer=layer;L.fn=fn||null;L.el.className='lbl '+(k||'');L.el.textContent=labelText(L);}
+function labelText(L){return L.fn?L.fn():t(L.key);}
+function refreshLabels(){Object.values(LBL).forEach(L=>{if(L.pos)L.el.textContent=labelText(L);});}
+let labelsOn=true;const pv=new T.Vector3();
+function updateLabels(){
+ const w=stage.clientWidth,h=stage.clientHeight,on=layerOn();
+ for(const L of Object.values(LBL)){
+  if(!labelsOn||!L.pos||!on[L.layer]||(ortho&&SECT_HIDE.has(L.key))){L.el.style.display='none';continue;}
+  pv.copy(L.pos).project(cam());
+  if(pv.z>1||pv.z<-1||Math.abs(pv.x)>1.1||Math.abs(pv.y)>1.1){L.el.style.display='none';continue;}
+  L.el.style.display='';L.el.style.transform=`translate(${(pv.x*0.5+0.5)*w}px,${(-pv.y*0.5+0.5)*h}px) translate(-50%,-50%)`;
+ }
+}
+
+/* ---------- camera controls ---------- */
+const cur={target:V(0,-240,70),r:1200,th:-0.95,ph:1.1};
+const goal={target:cur.target.clone(),r:cur.r,th:cur.th,ph:cur.ph};
+function placeCamera(){
+ const s=Math.sin(cur.ph);
+ camera.position.set(cur.target.x+cur.r*s*Math.sin(cur.th),cur.target.y+cur.r*Math.cos(cur.ph),cur.target.z+cur.r*s*Math.cos(cur.th));
+ camera.up.set(0,1,0);camera.near=Math.max(0.3,cur.r/2000);camera.far=cur.r*20+8000;camera.updateProjectionMatrix();camera.lookAt(cur.target);
+ if(ortho){const hh=cur.r*Math.tan(19*Math.PI/180),as=camera.aspect,dz=bounds.span*4;ocam.left=-hh*as;ocam.right=hh*as;ocam.top=hh;ocam.bottom=-hh;ocam.near=-dz;ocam.far=cur.r+dz;
+  ocam.position.copy(camera.position);ocam.up.copy(camera.up);ocam.updateProjectionMatrix();ocam.lookAt(cur.target);}
+}
+const rMin=()=>5,rMax=()=>Math.max(1500,bounds.span*6);
+function setView(k,instant){
+ const v=VIEWS[k];if(!v)return;ortho=(k==='sect'||k==='close');
+ goal.target.copy(v.target);goal.r=v.r;goal.ph=v.ph;
+ let th=v.th;while(th-cur.th>Math.PI)th-=2*Math.PI;while(cur.th-th>Math.PI)th+=2*Math.PI;goal.th=th;
+ if(reduceMotion||instant){cur.target.copy(goal.target);cur.r=goal.r;cur.th=goal.th;cur.ph=goal.ph;}
+}
+const ptrs=new Map();let lastPinch=0;
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button,sh:e.shiftKey});if(ptrs.size===2){const a=[...ptrs.values()];lastPinch=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);}});
+function endPtr(e){ptrs.delete(e.pointerId);if(ptrs.size<2)lastPinch=0;}
+canvas.addEventListener('pointerup',endPtr);canvas.addEventListener('pointercancel',endPtr);
+function pan(dx,dy){
+ const f=new T.Vector3();camera.getWorldDirection(f);
+ const right=new T.Vector3().crossVectors(f,camera.up).normalize();const up=new T.Vector3().crossVectors(right,f).normalize();
+ const k=cur.r*0.0013;cur.target.add(right.multiplyScalar(-dx*k).add(up.multiplyScalar(dy*k)));goal.target.copy(cur.target);
+}
+canvas.addEventListener('pointermove',e=>{
+ const p=ptrs.get(e.pointerId);if(!p)return;
+ const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;
+ if(ptrs.size===2){const a=[...ptrs.values()];const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+  if(lastPinch){cur.r=Math.min(rMax(),Math.max(rMin(),cur.r*lastPinch/d));goal.r=cur.r;}lastPinch=d;pan(dx/2,dy/2);return;}
+ if(p.b===2||p.sh||e.shiftKey){pan(dx,dy);return;}
+ ortho=false;cur.th-=dx*0.006;cur.ph=Math.min(Math.PI-0.05,Math.max(0.05,cur.ph-dy*0.006));goal.th=cur.th;goal.ph=cur.ph;
+});
+canvas.addEventListener('wheel',e=>{e.preventDefault();cur.r=Math.min(rMax(),Math.max(rMin(),cur.r*Math.exp(e.deltaY*0.0012)));goal.r=cur.r;},{passive:false});
+
+/* ---------- layers ---------- */
+const S=id=>document.getElementById(id);
+const L_host=S('L_host'),L_ore=S('L_ore'),L_mmw=S('L_mmw'),L_dil=S('L_dil'),L_rec=S('L_rec'),L_surf=S('L_surf'),L_dim=S('L_dim'),L_lbl=S('L_lbl');
+const layerOn=()=>({host:L_host.checked,ore:L_ore.checked,mmw:L_mmw.checked,dil:L_dil.checked,rec:L_rec.checked,surf:L_surf.checked,dim:L_dim.checked});
+function applyLayers(){const on=layerOn();for(const k in objs)objs[k].forEach(o=>{o.visible=on[k];});labelsOn=L_lbl.checked;}
+[L_host,L_ore,L_mmw,L_dil,L_surf,L_dim,L_lbl].forEach(el=>el.addEventListener('change',applyLayers));
+L_rec.addEventListener('change',build3D);
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+S('home').addEventListener('click',()=>setView('3d'));
+
+/* ---------- 2D charts ---------- */
+const cssv=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+function prep(cv){const r=cv.getBoundingClientRect(),dpr=Math.min(devicePixelRatio,2);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);return {c,w:r.width,h:r.height};}
+function stackBar(cv,parts){
+ const {c,w}=prep(cv);if(w<50)return;const ink=cssv('--ink');
+ const L=2,top=6,bh=30,pw=w-4;let x=L;
+ parts.forEach(s=>{const sw=pw*s.f;c.fillStyle=s.color;c.fillRect(x,top,sw,bh);
+  if(sw>40){c.fillStyle='#FFFFFF';c.font='600 12px "Barlow Semi Condensed", Barlow, sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(nf(s.f*100,0)+' %',x+sw/2,top+bh/2);}x+=sw;});
+ let lx=L;const ly=top+bh+16;c.textBaseline='middle';c.textAlign='left';c.font='500 12px Barlow, system-ui, sans-serif';
+ parts.forEach(s=>{c.fillStyle=s.color;c.fillRect(lx,ly-5,10,10);c.fillStyle=ink;const txt=s.label+' '+nf(s.f*100,1)+' %';c.fillText(txt,lx+14,ly);lx+=c.measureText(txt).width+28;});
+}
+function valueBars(cv,items){
+ const {c,w,h}=prep(cv);if(w<50)return;const ink=cssv('--ink'),mut=cssv('--muted'),rule=cssv('--rule');
+ const L=8,R=8,Tp=40,B=24,pw=w-L-R,ph=h-Tp-B,base=Tp+ph;
+ const vmax=Math.max(1,...items.map(i=>Math.abs(i.v))),gap=pw/items.length,bw=Math.min(84,gap*0.56);
+ c.strokeStyle=rule;c.lineWidth=1;c.beginPath();c.moveTo(L,base);c.lineTo(L+pw,base);c.stroke();
+ items.forEach((it,i)=>{const cx=L+gap*(i+0.5),bh=Math.max(0,it.v)/vmax*ph,yt=base-bh;
+  c.fillStyle=it.color;c.fillRect(cx-bw/2,yt,bw,bh);c.textAlign='center';c.textBaseline='bottom';
+  c.fillStyle=ink;c.font='600 13px "Barlow Semi Condensed", Barlow, sans-serif';
+  c.fillText((it.v<0?'−$':'$')+nf(Math.abs(it.v)/1e6,1)+' M',cx,yt-4);
+  if(i>0&&items[0].v>0){c.fillStyle=mut;c.font='500 11px Barlow, system-ui, sans-serif';c.fillText(nf(it.v/items[0].v*100,0)+' %',cx,yt-20);}
+  c.fillStyle=mut;c.font='500 12px Barlow, system-ui, sans-serif';c.textBaseline='top';c.fillText(it.label,cx,base+6);});
+}
+/* ---------- info panel ---------- */
+function kv(el,rows){el.innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');}
+const cls=s=>s===null||s===undefined?'n':s==='warn'?'warnc':s===true||s==='ok'?'ok':'bad';
+// row: [title, formula key, [calculation lines], result, status]
+function steps(id,rows){S(id).innerHTML=rows.map((x,i)=>`<li><span class="sn">${i+1}</span><span class="st">${x[0]}</span><span class="sr ${x[4]?cls(x[4]):''}">${x[3]}</span>`+
+ `<span class="fx">${x[1]?t(x[1]):''}</span><span class="eq">${x[2].map(l=>`<span>= ${l}</span>`).join('')}<span class="fin">= ${x[3]}</span></span></li>`).join('');}
+const exPre=()=>exampleNote&&isSI()?'':exampleNote==='res'?t('exRes'):exampleNote?fmt(t('exD'),{n:exampleNote.slice(1)}):'';
+const oz=(x,d=2)=>nf(x,d)+' ozt/ton';
+const sinA=()=>`sin ${nf(P.dip)}°`;
+// raw value before the slide rounding, shown only when it differs
+const raw=(x,shown,d=1)=>SL()&&Math.abs(x-shown)>1e-6?[nf(x,d)+' ≈ '+nf(shown,d===1?0:d)]:[];
+const rawW=(x,shown)=>SL()&&Math.abs(x-shown)>1e-6?[nf(x,3)+' ft ≈ '+nfx(shown,2)+' ft']:[];
+function renderEq(){
+ const E=eqCalc(),b=P.base,lbCu=LBT*P.cu/100;
+ const rows=[
+  [t('e1'),'fx_e1',[`(${nf(P.au,2)} ozt/ton) × ($${nf(P.pAu,2)}/ozt)`],usd(E.vAu,2)+'/ton'],
+  [t('e2'),'fx_e2',[`(${nf(P.ag,2)} ozt/ton) × ($${nf(P.pAg,2)}/ozt)`],usd(E.vAg,2)+'/ton'],
+  [t('e3'),'fx_e3',[`(2,000 lb/ton) × (${nf(P.cu,2)} / 100) × ($${nf(P.pCu,2)}/lb)`,`(${nf(lbCu,2)} lb Cu/ton) × ($${nf(P.pCu,2)}/lb)`],usd(E.vCu,2)+'/ton'],
+  [t('e4'),'fx_e4',[`${usd(E.vAu,2)} + ${usd(E.vAg,2)} + ${usd(E.vCu,2)}`],usd(E.tot,2)+'/'+t('uOre').replace(/s-/,'-')]];
+ if(b==='au')rows.push([t('e5au'),'fx_e5au',[`(${usd(E.tot,2)}/ton) / ($${nf(P.pAu,2)}/ozt Au)`],nf(E.au,2)+' ozt Au Eqv/ton','ok']);
+ else if(b==='ag')rows.push([t('e5ag'),'fx_e5ag',[`(${usd(E.tot,2)}/ton) / ($${nf(P.pAg,2)}/ozt Ag)`],nf(E.ag,2)+' ozt Ag Eqv/ton','ok']);
+ else rows.push([t('e5cu'),'fx_e5cu',[`${usd(E.tot,2)} / ($${nf(P.pCu,2)}/lb × 2,000 lb/ton) × 100`,`${usd(E.tot,2)} / (${usd(P.pCu*LBT,2)}/ton Cu) × 100`,`${nf(E.cu/100,4)} × 100`],nf(E.cu,2)+' % Cu Eqv','ok']);
+ steps('st_eq',rows);
+ const con=v=>b==='au'?nf(v/P.pAu,2)+' ozt Au':b==='ag'?nf(v/P.pAg,2)+' ozt Ag':nf(v/(P.pCu*LBT)*100,2)+' %';
+ const mets=[['mAu',E.vAu,C.au],['mAg',E.vAg,C.ag],['mCu',E.vCu,C.cu]],tot=E.tot||1;
+ S('eqT').innerHTML=`<thead><tr><th>${t('thMetal')}</th><th>${t('thVal')}</th><th>${t('thPct')}</th><th>${t('thCon')}</th></tr></thead><tbody>`+
+  mets.map(r=>`<tr><td><i class="sw" style="background:${r[2]};margin-right:6px"></i>${t(r[0])}</td><td class="n">${usd(r[1],2)}</td><td class="n">${nf(r[1]/tot*100,0)} %</td><td class="n">${con(r[1])}</td></tr>`).join('')+
+  `<tr class="tot"><td>${t('rTot')}</td><td class="n">${usd(E.tot,2)}</td><td class="n">100 %</td><td class="n">${con(E.tot)}</td></tr></tbody>`;
+ stackBar(S('eqCv'),mets.map(r=>({f:r[1]/tot,color:r[2],label:t(r[0])})));
+ kv(S('eqKV'),[[t('kAuEq'),oz(E.au)],[t('kAgEq'),oz(E.ag)],[t('kCuEq'),nf(E.cu,2)+' %'],[t('kSIeq'),nf(E.au*GPT,2)+' g/t']]);
+ const top=mets.slice().sort((a,c)=>c[1]-a[1])[0],sym={mAu:'Au',mAg:'Ag',mCu:'Cu'}[top[0]];
+ let s=fmt(t('eqNote'),{m:sym,p:nf(top[1]/tot*100,0)});
+ if(P.lnk)s+=fmt(t('eqLnk'),{g:oz(E.au,3)});
+ if(b==='ag')s+=t('eqSlide');
+ S('eqNote').textContent=s;
+}
+function renderIns(){
+ const m=model(),g=m.g,gd=P.lnk?3:2,dl=SL()?0:2,To_=tonsOf(m.Vo,P.SGo);
+ steps('st_ins',[
+  [t('i1'),'fx_i1',[`${ft(P.H,1)} / ${sinA()}`,`${ft(P.H,1)} / ${nf(m.sa,4)}`,...rawW(m.DLx,m.DL)],ft(m.DL,dl)],
+  [t('i2'),'fx_i2',[`${ft(P.L,0)} × ${ft(m.DL,dl)} × ${ft(P.TW)}`],nf(m.Vo,0)+' bcft'],
+  [t('i3'),'fx_i3',[`(2,000 lb/ton) / (${nf(P.SGo,2)} × 62.4 lb/cft)`,`2,000 / ${nf(P.SGo*LBFT,2)}`],nf(m.TF,2)+' bcft/ton'],
+  [t('i4'),'fx_i4',[`${nf(m.Vo,0)} bcft × ${nf(P.SGo,2)} × (62.4 lb/cft) / (2,000 lb/ton)`,`${nf(m.Vo*P.SGo*LBFT,0)} lb / (2,000 lb/ton)`,...raw(To_,m.To)],nf(m.To,0)+' '+t('uOre')],
+  [t('i5'),'fx_i5',[`${nf(m.To,0)} ${t('uOre')} × ${nf(g,gd)} ozt/ton`],nf(m.ozIn,0)+' ozt Au'],
+  [t('i6'),'fx_i6',[`${nf(m.To,0)} × ${nf(g,gd)} ozt/ton × $${nf(P.pR,2)}/ozt`,`${nf(m.ozIn,0)} ozt × $${nf(P.pR,2)}/ozt`],usd(m.Vin,0),'ok']]);
+ kv(S('insKV'),[[t('kSIv'),nf(m.Vo*FTM**3,0)+' m³'],[t('kSIt'),nf(m.To*STT,0)+' t'],[t('kSIg'),nf(g*GPT,2)+' g/t Au'],[t('kSIau'),nf(m.ozIn*OZG/1000,0)+' kg Au']]);
+ S('insNote').textContent=exPre()+fmt(t('insNote'),{tf:nf(m.TF,2),sg:nf(P.SGo,2)});
+}
+function renderMin(){
+ const m=model(),g=m.g,R=nf(P.rec/100,2),wd=SL()?1:2,dl=SL()?0:2;
+ chk(S('minChecks'),[[t('ckMmw'),`AW ${ft(m.AW,wd)} ${m.need?'<':'≥'} MMW ${nf(P.MMW,1)} ft: ${m.need?t('yes'):t('no')}`,m.need?'warn':'ok']]);
+ const rows=[[t('m1'),'fx_m1',[`${ft(P.TW)} / ${sinA()}`,`${ft(P.TW)} / ${nf(m.sa,4)}`,...rawW(m.AWx,m.AW)],ft(m.AW,wd)]];
+ if(m.need){
+  rows.push([t('m2'),'fx_m2',[`${nf(P.MMW,1)} ft − ${ft(m.AW,wd)}`],ft(m.dAW,wd)]);
+  rows.push([t('m3a'),'fx_m3a',[`${ft(m.dAW,wd)} × ${sinA()}`,`${ft(m.dAW,wd)} × ${nf(m.sa,4)}`,...rawW(m.dAW*m.sa,m.dTW)],ft(m.dTW,wd)]);
+  rows.push([t('m3b'),'fx_m3b',[`${ft(P.TW)} + ${ft(m.dTW,wd)}`],ft(m.MMWt,wd)]);
+  rows.push([t('m4a'),'fx_m4a',[`${ft(P.L,0)} × ${ft(m.DL,dl)} × ${ft(m.dTW,wd)}`],nf(m.Vm,0)+' bcft']);
+  rows.push([t('m4b'),'fx_m4b',[`${nf(m.Vm,0)} bcft × ${nf(P.SGw,2)} × 62.4 / 2,000`,...raw(tonsOf(m.Vm,P.SGw),m.Tm)],nf(m.Tm,0)+' '+t('uWaste')]);
+ }else rows.push([t('m2'),'fx_m2',[`${nf(P.MMW,1)} ft − ${ft(m.AW,wd)} ≤ 0 → ${t('m2no')}`],'0 ft','ok']);
+ rows.push([t('m5'),'fx_m5',[`${nf(m.Vo,0)} + ${nf(m.Vm,0)} bcft`],nf(m.Vt,0)+' bcft']);
+ rows.push([t('m6a'),'fx_m6a',[`${nf(m.Vt,0)} bcft × ${nf(P.dil/100,2)}`,...raw(m.Vt*P.dil/100,m.Vd)],nf(m.Vd,0)+' bcft']);
+ rows.push([t('m6b'),'fx_m6b',[`${nf(m.Vd,0)} bcft × ${nf(P.SGw,2)} × 62.4 / 2,000`,...raw(tonsOf(m.Vd,P.SGw),m.Td)],nf(m.Td,0)+' '+t('uWaste')]);
+ rows.push([t('m7'),'fx_m7',[`(${nf(m.To,0)} + ${nf(m.Tm,0)} + ${nf(m.Td,0)}) × ${R}`,`${nf(m.To2,0)} + ${nf(m.Tm2,0)} + ${nf(m.Td2,0)}`],nf(m.T,0)+' '+t('uMine')]);
+ const g8=[`(${nf(m.To2,0)} × ${nf(g,P.lnk?3:2)} + ${nf(m.Tm2,0)} × ${nf(P.gw,2)} + ${nf(m.Td2,0)} × ${nf(P.gw,2)}) / ${nf(m.T,0)}`,
+  `(${nf(m.oz1,0)} + ${nf(m.oz2,0)} + ${nf(m.oz3,0)}) ozt / ${nf(m.T,0)} tons`,`${nf(m.OZ,0)} / ${nf(m.T,0)}`];
+ if(SL())g8.push(`${nf(m.gD,3)} ≈ ${nf(m.gU,2)}`);
+ rows.push([t('m8'),'fx_m8',g8,oz(SL()?m.gU:m.gD,SL()?2:3)]);
+ rows.push([t('m9'),'fx_m9',[`${nf(m.T,0)} × ${nf(m.gU,SL()?2:3)} ozt/ton × $${nf(P.pR,2)}/ozt`,`${nf(m.T*m.gU,0)} ozt × $${nf(P.pR,2)}/ozt`],usd(m.Vmin,0),'ok']);
+ steps('st_min',rows);
+ const tr=[[t('rOre'),m.To2,g,m.oz1],[t('rMmw'),m.Tm2,P.gw,m.oz2],[t('rDil'),m.Td2,P.gw,m.oz3]];
+ S('minT').innerHTML=`<thead><tr><th>${t('thSrc')}</th><th>${t('thTons')}</th><th>${t('thG')}</th><th>${t('thTG')}</th></tr></thead><tbody>`+
+  tr.map(r=>`<tr><td>${r[0]}</td><td class="n">${nf(r[1],0)}</td><td class="n">${nf(r[2],P.lnk&&r[0]===t('rOre')?3:2)}</td><td class="n">${nf(r[3],0)}</td></tr>`).join('')+
+  `<tr class="tot"><td>${t('rTot')}</td><td class="n">${nf(m.T,0)}</td><td class="n">${nf(m.gD,3)}</td><td class="n">${nf(m.OZ,0)}</td></tr></tbody>`;
+ const Tin=m.To+m.Tm+m.Td;
+ kv(S('minKV'),[[t('kWaste'),nf((m.Tm2+m.Td2)/m.T*100,1)+' %'],[t('kExt'),nf(m.T/m.To,3)],[t('kMet'),nf(m.OZ/m.ozIn*100,1)+' %'],[t('kLoss'),nf(Tin-m.T,0)+' tons']]);
+ S('minNote').textContent=exPre()+fmt(t('minNote'),{g0:oz(g,2),g1:oz(m.gD,3),dg:nf((m.gD/g-1)*100,1),v0:usd(m.Vin,0),v1:usd(m.Vmin,0)});
+}
+function chk(el,rows){el.innerHTML=rows.map(r=>`<li><span>${r[0]}</span><span class="${cls(r[2])}">${r[1]}</span></li>`).join('');}
+function renderRec(){
+ const m=model(),mt='/'+t('uMined'),st=m.NV>0?'ok':'bad',gs=nf(m.gU,SL()?2:3),mr=nf(P.mr/100,2),sr=nf(P.sr/100,2);
+ steps('st_rec',[
+  [t('r1'),'fx_r1',[`${gs} × ${mr} × ${sr} × ($${nf(P.pR,2)} − $${nf(P.srf,2)})`,`${nf(m.gU*m.rr,4)} ozt/ton × $${nf(P.pR-P.srf,2)}/ozt`],usd(m.GRV,2)+mt],
+  [t('r2'),'fx_r2',[`$${nf(P.cMi,2)} + $${nf(P.cMl,2)} + $${nf(P.cGA,2)}`],usd(m.DPC,2)+mt],
+  [t('r3'),'fx_r3',[`${usd(m.GRV,2)} − ${usd(m.DPC,2)}`],usd(m.NV,2)+mt,st],
+  [t('r4'),'fx_r4',[`${usd(m.NV,2)}${mt} × ${nf(m.T,0)} ${t('uMine')}`],usd(m.TRV,0),st],
+  [t('r5'),'fx_r5',[`${gs} × ${mr} × ${sr}`,`${gs} × ${nf(m.rr,4)}`,...(SL()&&Math.abs(m.recx-m.recU)>1e-6?[`${nf(m.recx,5)} ≈ ${nf(m.recU,2)}`]:[])],oz(m.recU,SL()?2:4)],
+  [t('r6'),'fx_r6',[`${nf(m.T,0)} × ${nf(m.recx,SL()?5:4)} ozt/ton`,...(SL()?[`${nf(m.T*m.recx,1)} ≈ ${nf(m.ozR,0)}`]:[])],nf(m.ozR,0)+' ozt Au'],
+  [t('r7'),'fx_r7',[`${nf(m.ozR,0)} ozt / ${nf(P.ann,0)} ozt/${t('yr')}`,...(SL()?[`${nf(m.ozR/P.ann,3)} ≈ ${nf(m.life,1)}`]:[])],nf(m.life,SL()?1:2)+' '+t('uYrs')],
+  [t('r8'),'fx_r8',[`(${nf(P.ann,0)} ozt/${t('yr')} / ${nf(P.days,0)} ${t('dpy')}) / ${nf(m.recU,SL()?2:4)} ozt/ton`,`(${nf(P.ann/P.days,2)} ozt/${t('day')}) / ${nf(m.recU,SL()?2:4)} ozt/ton`],nf(m.daily,0)+' '+t('uDay')]]);
+ valueBars(S('recCv'),[{label:t('chIn'),v:m.Vin,color:C.ore},{label:t('chMin'),v:m.Vmin,color:C.vMin},{label:t('chRec'),v:m.TRV,color:m.TRV>=0?C.vRec:C.rec}]);
+ kv(S('recKV'),[[t('kBe'),oz(m.be,3)],[t('kMarg'),nf(m.GRV/m.DPC,2)],[t('kAnn'),nf(m.daily*P.days,0)+' tons']]);
+ let s=exPre();
+ s+=m.NV>0?fmt(t('recOk'),{nv:usd(m.NV,2),trv:usd(m.TRV,0),ann:nf(P.ann,0),life:nf(m.life,1),d:nf(m.daily,0)})
+  :fmt(t('recBad'),{dpc:usd(m.DPC,2),grv:usd(m.GRV,2),nv:usd(m.NV,2),be:oz(m.be,3)});
+ if(SL()&&Math.abs(m.recx-m.recU)>1e-4)s+=fmt(t('recSlide'),{oz:nf(m.ozR,0),x:nf(m.recx,3),y:nf(m.recU,2)});
+ s+=t('recPoly');
+ S('recNote').textContent=s;
+}
+
+/* ---------- SI (metric) procedure ---------- */
+const gt=(x,d=2)=>nf(x,d)+' g/t',Lm=(x,d=2)=>nfx(x,d)+' m',LBPT=LBT/STT;
+const uT=k=>t(k+'SI');
+function modelSI(p=P){
+ const E=eqCalc(p),g=(p.lnk?E.au:p.g)*GPT,gw=p.gw*GPT;
+ const a=p.dip*Math.PI/180,sa=Math.sin(a),ca=Math.cos(a);
+ const H=p.H*FTM,L=p.L*FTM,TW=p.TW*FTM,MMW=p.MMW*FTM;
+ const DL=H/sa,Vo=L*DL*TW,TF=1/p.SGo,To=Vo*p.SGo,gIn=To*g,ozIn=gIn/OZG,Vin=ozIn*p.pR;
+ const AW=TW/sa,need=MMW>AW+1e-9,dAW=need?MMW-AW:0,dTW=dAW*sa,MMWt=TW+dTW;
+ const Vm=L*DL*dTW,Tm=Vm*p.SGw,Vt=Vo+Vm,Vd=Vt*p.dil/100,Td=Vd*p.SGw;
+ const R=p.rec/100,To2=To*R,Tm2=Tm*R,Td2=Td*R,T=To2+Tm2+Td2;
+ const g1=To2*g,g2=Tm2*gw,g3=Td2*gw,G=g1+g2+g3,gD=T>0?G/T:0,Vmin=T*gD/OZG*p.pR;
+ const rr=p.mr/100*p.sr/100,cMi=p.cMi/STT,cMl=p.cMl/STT,cGA=p.cGA/STT,GRV=gD/OZG*rr*(p.pR-p.srf),DPC=cMi+cMl+cGA,NV=GRV-DPC,TRV=NV*T;
+ const recx=gD*rr,ozR=T*recx/OZG,life=ozR/p.ann,daily=p.ann*OZG/p.days/recx,be=DPC/(rr*(p.pR-p.srf))*OZG;
+ return {E,g,gw,a,sa,H,L,TW,MMW,DL,Vo,TF,To,gIn,ozIn,Vin,AW,need,dAW,dTW,MMWt,Vm,Tm,Vt,Vd,Td,R,To2,Tm2,Td2,T,g1,g2,g3,G,gD,Vmin,rr,cMi,cMl,cGA,GRV,DPC,NV,TRV,recx,ozR,life,daily,be};
+}
+const sinS=()=>`sin ${nf(P.dip)}°`;
+function renderEqSI(){
+ const E=eqCalc(),b=P.base,au=P.au*GPT,ag=P.ag*GPT,vAu=E.vAu/STT,vAg=E.vAg/STT,vCu=E.vCu/STT,tot=E.tot/STT,lbCu=LBPT*P.cu/100;
+ const aueq=tot/P.pAu*OZG,ageq=tot/P.pAg*OZG,cueq=E.cu;
+ const rows=[
+  [t('e1t'),'fx_e1si',[`(${gt(au)} ÷ 31.1035 g/oz) × $${nf(P.pAu,2)}/oz`,`${nf(au/OZG,4)} oz/t × $${nf(P.pAu,2)}/oz`],usd(vAu,2)+'/t'],
+  [t('e2t'),'fx_e2si',[`(${gt(ag)} ÷ 31.1035 g/oz) × $${nf(P.pAg,2)}/oz`,`${nf(ag/OZG,4)} oz/t × $${nf(P.pAg,2)}/oz`],usd(vAg,2)+'/t'],
+  [t('e3t'),'fx_e3si',[`(2,204.62 lb/t) × (${nf(P.cu,2)} / 100) × ($${nf(P.pCu,2)}/lb)`,`(${nf(lbCu,2)} lb Cu/t) × ($${nf(P.pCu,2)}/lb)`],usd(vCu,2)+'/t'],
+  [t('e4'),'fx_e4',[`${usd(vAu,2)} + ${usd(vAg,2)} + ${usd(vCu,2)}`],usd(tot,2)+'/'+uT('uOreT')]];
+ if(b==='au')rows.push([t('e5au'),'fx_e5ausi',[`(${usd(tot,2)}/t) / ($${nf(P.pAu,2)}/oz) × 31.1035 g/oz`,`${nf(tot/P.pAu,4)} oz/t × 31.1035 g/oz`],nf(aueq,2)+' g/t Au Eq','ok']);
+ else if(b==='ag')rows.push([t('e5ag'),'fx_e5agsi',[`(${usd(tot,2)}/t) / ($${nf(P.pAg,2)}/oz) × 31.1035 g/oz`,`${nf(tot/P.pAg,3)} oz/t × 31.1035 g/oz`],nf(ageq,1)+' g/t Ag Eq','ok']);
+ else rows.push([t('e5cu'),'fx_e5cusi',[`${usd(tot,2)} / ($${nf(P.pCu,2)}/lb × 2,204.62 lb/t) × 100`,`${usd(tot,2)} / (${usd(P.pCu*LBPT,2)}/t Cu) × 100`,`${nf(cueq/100,4)} × 100`],nf(cueq,2)+' % Cu Eq','ok']);
+ steps('st_eq',rows);
+ const con=v=>b==='au'?nf(v/P.pAu*OZG,2)+' g Au':b==='ag'?nf(v/P.pAg*OZG,1)+' g Ag':nf(v/(P.pCu*LBPT)*100,2)+' %';
+ const mets=[['mAu',vAu,C.au],['mAg',vAg,C.ag],['mCu',vCu,C.cu]];
+ S('eqT').innerHTML=`<thead><tr><th>${t('thMetal')}</th><th>${t('thValSI')}</th><th>${t('thPct')}</th><th>${t('thCon')}</th></tr></thead><tbody>`+
+  mets.map(r=>`<tr><td><i class="sw" style="background:${r[2]};margin-right:6px"></i>${t(r[0])}</td><td class="n">${usd(r[1],2)}</td><td class="n">${nf(r[1]/tot*100,0)} %</td><td class="n">${con(r[1])}</td></tr>`).join('')+
+  `<tr class="tot"><td>${t('rTot')}</td><td class="n">${usd(tot,2)}</td><td class="n">100 %</td><td class="n">${con(tot)}</td></tr></tbody>`;
+ stackBar(S('eqCv'),mets.map(r=>({f:r[1]/(tot||1),color:r[2],label:t(r[0])})));
+ kv(S('eqKV'),[[t('kAuEq'),gt(aueq)],[t('kAgEq'),gt(ageq,1)],[t('kCuEq'),nf(cueq,2)+' %'],[t('kUSeq'),oz(E.au)]]);
+ const top=mets.slice().sort((a,c)=>c[1]-a[1])[0],sym={mAu:'Au',mAg:'Ag',mCu:'Cu'}[top[0]];
+ let s=fmt(t('eqNote'),{m:sym,p:nf(top[1]/tot*100,0)});
+ if(P.lnk)s+=fmt(t('eqLnk'),{g:gt(aueq,2)});
+ S('eqNote').textContent=s+t('siNote');
+}
+function renderInsSI(){
+ const m=modelSI();
+ steps('st_ins',[
+  [t('i1'),'fx_i1',[`${Lm(m.H,1)} / ${sinS()}`,`${Lm(m.H,1)} / ${nf(m.sa,4)}`],Lm(m.DL,1)],
+  [t('i2'),'fx_i2',[`${Lm(m.L,1)} × ${Lm(m.DL,1)} × ${Lm(m.TW)}`],nf(m.Vo,0)+' m³'],
+  [t('i3'),'fx_i3si',[`1 / ${nf(P.SGo,2)} t/m³`],nf(m.TF,3)+' m³/t'],
+  [t('i4'),'fx_i4si',[`${nf(m.Vo,0)} m³ × ${nf(P.SGo,2)} t/m³`],nf(m.To,0)+' '+uT('uOre')],
+  [t('i5'),'fx_i5si',[`${nf(m.To,0)} t × ${gt(m.g)} ÷ 31.1035 g/oz`,`${nf(m.gIn,0)} g ÷ 31.1035 g/oz`],nf(m.ozIn,0)+' oz Au'],
+  [t('i6'),'fx_i6si',[`${nf(m.ozIn,0)} oz × $${nf(P.pR,2)}/oz`],usd(m.Vin,0),'ok']]);
+ kv(S('insKV'),[[t('kUSv'),nf(m.Vo/FTM**3,0)+' bcft'],[t('kUSt'),nf(m.To/STT,0)+' tons'],[t('kUSg'),oz(m.g/GPT,3)],[t('kUSau'),nf(m.ozIn,0)+' ozt']]);
+ S('insNote').textContent=exPre()+fmt(t('insNoteSI'),{tf:nf(m.TF,3),sg:nf(P.SGo,2)});
+}
+function renderMinSI(){
+ const m=modelSI(),R=nf(P.rec/100,2);
+ chk(S('minChecks'),[[t('ckMmw'),`AW ${Lm(m.AW,3)} ${m.need?'<':'≥'} MMW ${Lm(m.MMW,3)}: ${m.need?t('yes'):t('no')}`,m.need?'warn':'ok']]);
+ const rows=[[t('m1'),'fx_m1',[`${Lm(m.TW,3)} / ${sinS()}`,`${Lm(m.TW,3)} / ${nf(m.sa,4)}`],Lm(m.AW,3)]];
+ if(m.need){
+  rows.push([t('m2'),'fx_m2',[`${Lm(m.MMW,3)} − ${Lm(m.AW,3)}`],Lm(m.dAW,3)]);
+  rows.push([t('m3a'),'fx_m3a',[`${Lm(m.dAW,3)} × ${sinS()}`,`${Lm(m.dAW,3)} × ${nf(m.sa,4)}`],Lm(m.dTW,3)]);
+  rows.push([t('m3b'),'fx_m3b',[`${Lm(m.TW,3)} + ${Lm(m.dTW,3)}`],Lm(m.MMWt,3)]);
+  rows.push([t('m4a'),'fx_m4a',[`${Lm(m.L,1)} × ${Lm(m.DL,1)} × ${Lm(m.dTW,3)}`],nf(m.Vm,0)+' m³']);
+  rows.push([t('m4b'),'fx_m4bsi',[`${nf(m.Vm,0)} m³ × ${nf(P.SGw,2)} t/m³`],nf(m.Tm,0)+' '+uT('uWaste')]);
+ }else rows.push([t('m2'),'fx_m2',[`${Lm(m.MMW,3)} − ${Lm(m.AW,3)} ≤ 0 → ${t('m2no')}`],'0 m','ok']);
+ rows.push([t('m5'),'fx_m5',[`${nf(m.Vo,0)} + ${nf(m.Vm,0)} m³`],nf(m.Vt,0)+' m³']);
+ rows.push([t('m6a'),'fx_m6a',[`${nf(m.Vt,0)} m³ × ${nf(P.dil/100,2)}`],nf(m.Vd,0)+' m³']);
+ rows.push([t('m6b'),'fx_m6bsi',[`${nf(m.Vd,0)} m³ × ${nf(P.SGw,2)} t/m³`],nf(m.Td,0)+' '+uT('uWaste')]);
+ rows.push([t('m7'),'fx_m7',[`(${nf(m.To,0)} + ${nf(m.Tm,0)} + ${nf(m.Td,0)}) × ${R}`,`${nf(m.To2,0)} + ${nf(m.Tm2,0)} + ${nf(m.Td2,0)}`],nf(m.T,0)+' '+uT('uMine')]);
+ rows.push([t('m8'),'fx_m8',[`(${nf(m.To2,0)} × ${nf(m.g,2)} + ${nf(m.Tm2,0)} × ${nf(m.gw,2)} + ${nf(m.Td2,0)} × ${nf(m.gw,2)}) / ${nf(m.T,0)}`,
+  `(${nf(m.g1,0)} + ${nf(m.g2,0)} + ${nf(m.g3,0)}) g / ${nf(m.T,0)} t`,`${nf(m.G,0)} / ${nf(m.T,0)}`],gt(m.gD,2)]);
+ rows.push([t('m9'),'fx_m9si',[`${nf(m.T,0)} t × ${gt(m.gD)} ÷ 31.1035 g/oz × $${nf(P.pR,2)}/oz`,`${nf(m.T*m.gD/OZG,0)} oz × $${nf(P.pR,2)}/oz`],usd(m.Vmin,0),'ok']);
+ steps('st_min',rows);
+ const tr=[[t('rOre'),m.To2,m.g,m.g1],[t('rMmw'),m.Tm2,m.gw,m.g2],[t('rDil'),m.Td2,m.gw,m.g3]];
+ S('minT').innerHTML=`<thead><tr><th>${t('thSrc')}</th><th>${t('thTonsSI')}</th><th>${t('thG')} (g/t)</th><th>${t('thTGsi')}</th></tr></thead><tbody>`+
+  tr.map(r=>`<tr><td>${r[0]}</td><td class="n">${nf(r[1],0)}</td><td class="n">${nf(r[2],2)}</td><td class="n">${nf(r[3],0)}</td></tr>`).join('')+
+  `<tr class="tot"><td>${t('rTot')}</td><td class="n">${nf(m.T,0)}</td><td class="n">${nf(m.gD,2)}</td><td class="n">${nf(m.G,0)}</td></tr></tbody>`;
+ const Tin=m.To+m.Tm+m.Td;
+ kv(S('minKV'),[[t('kWaste'),nf((m.Tm2+m.Td2)/m.T*100,1)+' %'],[t('kExt'),nf(m.T/m.To,3)],[t('kMet'),nf(m.G/m.gIn*100,1)+' %'],[t('kLoss'),nf(Tin-m.T,0)+' t']]);
+ S('minNote').textContent=exPre()+fmt(t('minNote'),{g0:gt(m.g,2),g1:gt(m.gD,2),dg:nf((m.gD/m.g-1)*100,1),v0:usd(m.Vin,0),v1:usd(m.Vmin,0)})+t('siNote');
+}
+function renderRecSI(){
+ const m=modelSI(),mt='/'+uT('uMined'),st=m.NV>0?'ok':'bad',mr=nf(P.mr/100,2),sr=nf(P.sr/100,2);
+ steps('st_rec',[
+  [t('r1'),'fx_r1si',[`(${gt(m.gD)} ÷ 31.1035 g/oz) × ${mr} × ${sr} × ($${nf(P.pR,2)} − $${nf(P.srf,2)})`,`${nf(m.gD/OZG*m.rr,4)} oz/t × $${nf(P.pR-P.srf,2)}/oz`],usd(m.GRV,2)+mt],
+  [t('r2'),'fx_r2',[`$${nf(m.cMi,2)} + $${nf(m.cMl,2)} + $${nf(m.cGA,2)}`],usd(m.DPC,2)+mt],
+  [t('r3'),'fx_r3',[`${usd(m.GRV,2)} − ${usd(m.DPC,2)}`],usd(m.NV,2)+mt,st],
+  [t('r4'),'fx_r4',[`${usd(m.NV,2)}${mt} × ${nf(m.T,0)} t`],usd(m.TRV,0),st],
+  [t('r5'),'fx_r5si',[`${gt(m.gD)} × ${mr} × ${sr}`,`${gt(m.gD)} × ${nf(m.rr,4)}`],gt(m.recx,2)],
+  [t('r6'),'fx_r6si',[`${nf(m.T,0)} t × ${gt(m.recx,3)} ÷ 31.1035 g/oz`,`${nf(m.T*m.recx,0)} g ÷ 31.1035 g/oz`],nf(m.ozR,0)+' oz Au'],
+  [t('r7'),'fx_r7',[`${nf(m.ozR,0)} oz / ${nf(P.ann,0)} oz/${t('yr')}`],nf(m.life,2)+' '+t('uYrs')],
+  [t('r8'),'fx_r8si',[`(${nf(P.ann,0)} oz/${t('yr')} × 31.1035 g/oz / ${nf(P.days,0)} ${t('dpy')}) / ${gt(m.recx,3)}`,`(${nf(P.ann*OZG/P.days,0)} g/${t('day')}) / ${gt(m.recx,3)}`],nf(m.daily,0)+' '+uT('uDay')]]);
+ valueBars(S('recCv'),[{label:t('chIn'),v:m.Vin,color:C.ore},{label:t('chMin'),v:m.Vmin,color:C.vMin},{label:t('chRec'),v:m.TRV,color:m.TRV>=0?C.vRec:C.rec}]);
+ kv(S('recKV'),[[t('kBe'),gt(m.be,2)],[t('kMarg'),nf(m.GRV/m.DPC,2)],[t('kAnn'),nf(m.daily*P.days,0)+' t']]);
+ let s=exPre();
+ s+=m.NV>0?fmt(t('recOk'),{nv:usd(m.NV,2),trv:usd(m.TRV,0),ann:nf(P.ann,0),life:nf(m.life,1),d:nf(m.daily,0)})
+  :fmt(t('recBad'),{dpc:usd(m.DPC,2),grv:usd(m.GRV,2),nv:usd(m.NV,2),be:gt(m.be,2)});
+ S('recNote').textContent=s+t('recPoly')+t('siNote');
+}
+
+/* ---------- tabs, language, rounding, wiring ---------- */
+let TAB='min',exampleNote='res';
+const TABS=['eq','ins','min','rec'];
+function setTab(k){TAB=k;document.querySelectorAll('#tabSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.tab===k)));
+ TABS.forEach(q=>S('tab_'+q).hidden=q!==TAB);refresh2D();}
+document.querySelectorAll('#tabSeg button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+function refresh2D(){const fn=(isSI()?{eq:renderEqSI,ins:renderInsSI,min:renderMinSI,rec:renderRecSI}:{eq:renderEq,ins:renderIns,min:renderMin,rec:renderRec})[TAB];if(S('info').open||window.innerWidth<820)fn();}
+let rebuildTimer=null;
+function onChange(){exampleNote=null;clearTimeout(rebuildTimer);rebuildTimer=setTimeout(build3D,60);syncSlider(ctrlOf('g'));refresh2D();}
+S('lnk').addEventListener('change',e=>{P.lnk=e.target.checked;syncSlider(ctrlOf('g'));onChange();});
+document.querySelectorAll('#baseSeg button').forEach(b=>b.addEventListener('click',()=>{P.base=b.dataset.base;
+ document.querySelectorAll('#baseSeg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));refresh2D();}));
+const EX={
+ res:{au:.35,ag:9.1,cu:.4,pAu:4000,pAg:60,pCu:6,dip:75,H:483,L:750,TW:6.2,SGo:2.8,SGw:2.5,g:.5,gw:.1,pR:2160,MMW:8,dil:15,rec:85,mr:90,sr:85,srf:60,cMi:40,cMl:58.5,cGA:2.25,ann:20000,days:300,exag:3,lnk:false},
+ d1:{dip:75,H:100*Math.sin(75*Math.PI/180),L:120,TW:10,SGo:2.8,SGw:2.8,g:.5,gw:0,MMW:0,dil:12,rec:100,exag:1,lnk:false},
+ d2:{dip:75,H:100*Math.sin(75*Math.PI/180),L:120,TW:10,SGo:2.8,SGw:2.4,g:.5,gw:0,MMW:0,dil:12,rec:100,exag:1,lnk:false},
+ d3:{dip:75,H:100*Math.sin(75*Math.PI/180),L:120,TW:10,SGo:2.8,SGw:2.4,g:.5,gw:.05,MMW:0,dil:12,rec:100,exag:1,lnk:false}};
+function loadEx(k){
+ Object.assign(P,EX[k]);S('lnk').checked=P.lnk;CTRL.forEach(syncSlider);applyRound(true,true);
+ build3D();setView('3d');exampleNote=k;setTab(k==='res'?TAB:'min');
+}
+S('bEx').addEventListener('click',()=>loadEx(S('s_ex').value));
+function applyRound(v,quiet){P.slide=v;setUnitHint();placeCtrl();document.querySelectorAll('[data-rnd]').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.rnd==='s')===v)));
+ if(!quiet){refreshLabels();refresh2D();}}
+document.querySelectorAll('[data-rnd]').forEach(b=>b.addEventListener('click',()=>{exampleNote=null;applyRound(b.dataset.rnd==='s');build3D();}));
+function applyLang(l,quiet){
+ lang=l;document.documentElement.lang=l;
+ document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===l)));
+ document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+ document.querySelectorAll('[data-i18n-title]').forEach(el=>{el.title=t(el.dataset.i18nTitle);});
+ CTRL.forEach(c=>{S('o_'+c[1]).textContent=outText(c);});
+ refreshLabels();
+ setUnitHint();
+ if(!quiet){refreshCube();refresh2D();placeCtrl();}
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+function setUnitHint(){S('unitHint').textContent=t(units==='si'?'uhSI':'uhUS');S('rndHint').textContent=t(units==='si'?'rhSI':P.slide?'rhSlide':'rhExact');}
+function applyUnits(u){units=u;document.querySelectorAll('[data-units]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.units===u)));setUnitHint();placeCtrl();
+ document.querySelectorAll('[data-rnd]').forEach(b=>{b.disabled=(u==='si');b.title=u==='si'?t('rndOff'):'';});
+ CTRL.forEach(syncSlider);build3D();refresh2D();}
+document.querySelectorAll('[data-units]').forEach(b=>b.addEventListener('click',()=>applyUnits(b.dataset.units)));
+window.addEventListener('resize',()=>refresh2D());
+S('info').addEventListener('toggle',()=>{setTimeout(refresh2D,0);});
+/* ---------- orientation cube ---------- */
+const cubeCanvas=document.getElementById('cube');
+const cr=new T.WebGLRenderer({canvas:cubeCanvas,antialias:true,alpha:true});
+cr.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+const cs=new T.Scene(),cc=new T.PerspectiveCamera(30,1,0.1,20);
+cs.add(new T.AmbientLight(0xffffff,1));
+const faceKeys=['fE','fW','fTop','fBot','fS','fN'];
+const faceCol=['#DCE3E6','#DCE3E6','#F2F5F6','#C9D1D5','#E6E1D3','#D7E3EE'];
+const faceMats=faceKeys.map(()=>new T.MeshBasicMaterial({color:0xffffff}));
+function makeFaceTex(i,hover){
+ const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+ g.fillStyle=hover?'#2F6DB5':faceCol[i];g.fillRect(0,0,128,128);
+ g.strokeStyle='#17222A';g.lineWidth=5;g.strokeRect(2.5,2.5,123,123);
+ g.fillStyle=hover?'#FFFFFF':'#17222A';const txt=t(faceKeys[i]);
+ g.font='600 '+(txt.length>4?26:38)+'px "Barlow Semi Condensed", Barlow, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(txt,64,66);
+ const tex=new T.CanvasTexture(c);tex.anisotropy=4;return tex;
+}
+let hoverFace=-1;
+function refreshCube(){faceMats.forEach((m,i)=>{if(m.map)m.map.dispose();m.map=makeFaceTex(i,i===hoverFace);m.needsUpdate=true;});}
+const cubeMesh=new T.Mesh(new T.BoxGeometry(1,1,1),faceMats);cs.add(cubeMesh);
+cs.add(new T.LineSegments(new T.EdgesGeometry(cubeMesh.geometry),new T.LineBasicMaterial({color:0x17222A})));
+refreshCube();
+const dirv=new T.Vector3();
+function renderCube(){
+ const w=cubeCanvas.clientWidth,h=cubeCanvas.clientHeight;
+ if(cubeCanvas.width!==Math.round(w*cr.getPixelRatio()))cr.setSize(w,h,false);
+ dirv.copy(camera.position).sub(cur.target).normalize().multiplyScalar(3.4);
+ cc.position.copy(dirv);cc.up.copy(camera.up);cc.lookAt(0,0,0);cr.render(cs,cc);
+}
+const rc=new T.Raycaster(),mv=new T.Vector2();
+function pickFace(e){const r=cubeCanvas.getBoundingClientRect();mv.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);
+ rc.setFromCamera(mv,cc);const hit=rc.intersectObject(cubeMesh)[0];return hit?Math.floor(hit.faceIndex/2):-1;}
+function viewFromFace(f){
+ const wrapTh=th=>{while(th-cur.th>Math.PI)th-=2*Math.PI;while(cur.th-th>Math.PI)th+=2*Math.PI;return th;};
+ ortho=false;
+ if(f===2){goal.ph=0.06;if(reduceMotion)cur.ph=goal.ph;return;}
+ if(f===3){goal.ph=Math.PI-0.06;return;}
+ const map={0:Math.PI/2,1:-Math.PI/2,4:0,5:Math.PI};
+ goal.th=wrapTh(map[f]);goal.ph=Math.PI/2-0.02;
+ if(reduceMotion){cur.th=goal.th;cur.ph=goal.ph;}
+}
+let cdrag=null;
+cubeCanvas.addEventListener('pointerdown',e=>{cubeCanvas.setPointerCapture(e.pointerId);cdrag={x:e.clientX,y:e.clientY,moved:0};});
+cubeCanvas.addEventListener('pointermove',e=>{
+ if(!cdrag){const f=pickFace(e);if(f!==hoverFace){hoverFace=f;refreshCube();}return;}
+ const dx=e.clientX-cdrag.x,dy=e.clientY-cdrag.y;cdrag.x=e.clientX;cdrag.y=e.clientY;cdrag.moved+=Math.abs(dx)+Math.abs(dy);
+ if(cdrag.moved>4){ortho=false;cur.th-=dx*0.012;cur.ph=Math.min(Math.PI-0.05,Math.max(0.05,cur.ph-dy*0.012));goal.th=cur.th;goal.ph=cur.ph;}
+});
+cubeCanvas.addEventListener('pointerup',e=>{if(cdrag&&cdrag.moved<=4){const f=pickFace(e);if(f>=0)viewFromFace(f);}cdrag=null;});
+cubeCanvas.addEventListener('pointerleave',()=>{if(!cdrag&&hoverFace!==-1){hoverFace=-1;refreshCube();}});
+cubeCanvas.addEventListener('pointercancel',()=>{cdrag=null;});
+
+/* ---------- draggable panels ---------- */
+document.querySelectorAll('.grip').forEach(grip=>{
+ const panel=grip.closest('.panel');
+ grip.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();});
+ grip.addEventListener('pointerdown',e=>{
+  if(window.innerWidth<820)return;
+  e.preventDefault();e.stopPropagation();grip.setPointerCapture(e.pointerId);
+  const r=panel.getBoundingClientRect();const ox=e.clientX-r.left,oy=e.clientY-r.top;
+  panel.classList.add('dragging');panel.dataset.moved='1';
+  const move=ev=>{const W=window.innerWidth,H=window.innerHeight;
+   const x=Math.min(W-40,Math.max(-r.width+60,ev.clientX-ox)),y=Math.min(H-30,Math.max(0,ev.clientY-oy));
+   panel.style.left=x+'px';panel.style.top=y+'px';panel.style.right='auto';panel.style.bottom='auto';};
+  const up=()=>{panel.classList.remove('dragging');grip.removeEventListener('pointermove',move);grip.removeEventListener('pointerup',up);grip.removeEventListener('pointercancel',up);};
+  grip.addEventListener('pointermove',move);grip.addEventListener('pointerup',up);grip.addEventListener('pointercancel',up);
+ });
+});
+const headEl=document.getElementById('head'),ctrlEl=document.getElementById('ctrl');
+function placeCtrl(){
+ if(ctrlEl.dataset.moved||window.innerWidth<820){if(window.innerWidth<820){ctrlEl.style.top='';ctrlEl.style.maxHeight='';}return;}
+ const top=headEl.offsetTop+headEl.offsetHeight+10;ctrlEl.style.top=top+'px';ctrlEl.style.maxHeight='calc(100% - '+(top+14)+'px)';
+}
+window.addEventListener('resize',placeCtrl);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{placeCtrl();refresh2D();refreshCube();});
+
+/* ---------- keep model centred between panels ---------- */
+let viewShift=0;
+function freeCenterShift(){
+ const W=stage.clientWidth;if(window.innerWidth<820)return 0;
+ const ctrl=ctrlEl.getBoundingClientRect(),info=document.getElementById('info').getBoundingClientRect(),head=headEl.getBoundingClientRect();
+ let left=0,right=W;[ctrl,head].forEach(r=>{if(r.left<W*0.4)left=Math.max(left,r.right);});
+ if(info.left>W*0.55&&info.top<window.innerHeight*0.5)right=Math.min(right,info.left);
+ if(right-left<200)return 0;return (left+right)/2-W/2;
+}
+function applyShift(){
+ const s=Math.round(freeCenterShift());
+ if(s!==viewShift){viewShift=s;const w=stage.clientWidth,h=stage.clientHeight;
+  [camera,ocam].forEach(cm=>{if(s)cm.setViewOffset(w,h,-s,0,w,h);else cm.clearViewOffset();cm.updateProjectionMatrix();});}
+}
+
+/* ---------- loop ---------- */
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;viewShift=null;[camera,ocam].forEach(cm=>{cm.clearViewOffset();cm.updateProjectionMatrix();});applyShift();}
+new ResizeObserver(resize).observe(stage);
+function frame(){
+ const a=reduceMotion?1:0.12;
+ cur.target.lerp(goal.target,a);cur.r+=(goal.r-cur.r)*a;cur.th+=(goal.th-cur.th)*a;cur.ph+=(goal.ph-cur.ph)*a;
+ applyShift();placeCamera();renderer.render(scene,cam());updateLabels();renderCube();requestAnimationFrame(frame);
+}
+
+buildControls();
+if(window.innerWidth<820)document.getElementById('info').open=false;
+applyLang('en',true);applyRound(true,true);build3D();setView('3d',true);resize();applyLang('en');setTab('min');placeCtrl();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
